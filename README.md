@@ -26,17 +26,11 @@
 
 ## PHẦN MỀM CẦN THIẾT
 
-- Figma: Công cụ thiết kế giao diện người dùng (UI), thiết kế UX và tạo prototype trên nền tảng web.
-
 - Git: Dùng để clone và quản lý mã nguồn từ repository (hệ thống kiểm soát phiên bản phân tán).
 
 - Node.js: Dùng để biên dịch và chạy các công cụ phân tích mã như ESLint, cũng như xây dựng backend.
 
-- PowerDesigner: Dùng để thiết kế lược đồ cơ sở dữ liệu, mô hình hóa dữ liệu (ERD), và phân tích hệ thống.
-
 - SQL Server Management Studio (SSMS): Dùng để quản lý, truy vấn và thiết kế cơ sở dữ liệu SQL Server.
-
-- Visual Paradigm: Phần mềm mô hình hóa UML, thiết kế hệ thống, tạo sơ đồ và quản lý quy trình phần mềm.
 
 - Visual Studio Code (VS Code): Trình soạn thảo mã nguồn nhẹ, hỗ trợ nhiều ngôn ngữ lập trình và mở rộng bằng tiện ích.
 
@@ -46,11 +40,10 @@
 
 - Mở terminal hoặc command prompt
 - Chạy lệnh sau để tải mã nguồn từ GitHub
-  - git clone https://github.com/KimHa7356/tn-DA21TTC-110121020-AuKimHa-KTma_HTML_CSS_JAVASCRIPT.git
+  - git clone https://github.com/dydy202/tn-DA21TTC-110121191-NguyenPhanBaoDuy-Phat_trien_website_dat_lich_tham_my.git
 
 ### Chạy Backend
 
-- Mở terminal, di chuyển đến thư mục dự án, và chạy server FastAPI:
-  - uvicorn main:app --reload
-- Mở Frontend
-  - http://127.0.0.1:8000
+- Mở SQL Server Management Studio (SSMS), di chuyển đến thư mục dự án, và chạy file Solution1.ssmssln để khởi tạo cấu trúc cơ sở dữ liệu.
+- Mở Visual Studio Code (VS Code), mở thư mục spa đã giải nén, chạy file app.js.
+- Truy cập vào đường dẫn http://localhost:3000/trangchu để sử dụng trang web.
