@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sửa Quyền</title>
+    <style>
+      body {
+        font-family: "Arial", sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f9;
+      }
+      .container {
+        display: flex;
+        min-height: 100vh;
+      }
+      .sidebar {
+        width: 250px;
+        background-color: #2c3e50;
+        color: white;
+        padding: 20px;
+        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+      }
+      .sidebar h2 {
+        font-size: 1.5em;
+        margin-bottom: 20px;
+        text-align: center;
+      }
+      .sidebar ul {
+        list-style: none;
+        padding: 0;
+      }
+      .sidebar ul li {
+        margin: 10px 0;
+      }
+      .sidebar ul li a {
+        color: white;
+        text-decoration: none;
+        font-size: 1.1em;
+        display: block;
+        padding: 10px;
+        border-radius: 5px;
+        transition: background 0.3s;
+      }
+      .sidebar ul li a:hover {
+        background-color: #34495e;
+      }
+      .content {
+        flex: 1;
+        padding: 30px;
+        background-color: white;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        margin: 20px;
+        border-radius: 8px;
+      }
+      .content h1 {
+        font-size: 2em;
+        color: #2c3e50;
+        margin-bottom: 20px;
+      }
+      .message {
+        color: #27ae60;
+        background-color: #e8f5e9;
+        padding: 10px;
+        border-radius: 5px;
+        margin-bottom: 20px;
+      }
+      .error {
+        color: #c0392b;
+        background-color: #fdedec;
+        padding: 10px;
+        border-radius: 5px;
+        margin-bottom: 20px;
+      }
+      .form-container {
+        margin-bottom: 20px;
+        padding: 20px;
+        background-color: #f9f9f9;
+        border-radius: 8px;
+      }
+      .form-container input,
+      .form-container select {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+      }
+      .form-container button {
+        padding: 10px 20px;
+        background-color: #27ae60;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      .form-container button:hover {
+        background-color: #219653;
+      }
+      .logout-btn {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #e74c3c;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background 0.3s;
+      }
+      .logout-btn:hover {
+        background-color: #c0392b;
+      }
+      @media (max-width: 768px) {
+        .container {
+          flex-direction: column;
+        }
+        .sidebar {
+          width: 100%;
+          padding: 10px;
+        }
+        .content {
+          margin: 10px;
+          padding: 15px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="sidebar">
+        <!-- Sidebar giống quyen.ejs -->
+      </div>
+      <div class="content">
+        <h1>Sửa Quyền</h1>
+        <% if (message) { %>
+        <p class="error"><%= message %></p>
+        <% } %>
+        <div class="form-container">
+          <form action="/admin/quyen/edit" method="POST">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+            <input type="hidden" name="maQ" value="<%= quyen.MaQ %>" />
+            <label for="tenQ">Tên Quyền:</label>
+            <input
+              type="text"
+              id="tenQ"
+              name="tenQ"
+              value="<% tenQ %>"
+              required
+            />
+            <label for="moTaQ">Mô Tả:</label>
+            <textarea id="moTaQ" name="moTaQ" rows="4">
+<%= quyen.MoTaQ || '' %></textarea
+            >
+            <button type="submit">Lưu Thay Đổi</button>
+          </form>
+        </div>
+        <a href="/admin/quyen" class="action-btn">Quay lại</a>
+      </div>
+    </div>
+  </body>
+</html>

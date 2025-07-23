@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quản Trị</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="sidebar">
+        <h2>Chọn mục để quản lý:</h2>
+        <ul>
+          <li><a href="/admin/taikhoan">Tài Khoản</a></li>
+          <li><a href="/admin/khachhang">Khách Hàng</a></li>
+          <li><a href="/admin/nhanvien">Nhân Viên</a></li>
+          <li><a href="/admin/loaisanpham">Loại Nhóm Sản Phẩm</a></li>
+          <li><a href="/admin/sanpham">Sản Phẩm</a></li>
+          <li><a href="/admin/lichhen">Lịch Hẹn</a></li>
+          <li><a href="/admin/hoadon">Hóa Đơn</a></li>
+          <li><a href="/admin/chitiethoadon">Chi Tiết Hóa Đơn</a></li>
+          <li><a href="/admin/danhgia">Đánh Giá</a></li>
+        </ul>
+      </div>
+      <div class="content">
+        <!-- nội dung -->
+        <h1>Sửa Sản Phẩm</h1>
+        <form
+  action="/admin/sanpham/suasanpham/<%= sanpham.sanpham_id %>"
+  method="POST"
+>
+  <label for="tensanpham">Tên Sản Phẩm:</label>
+  <input
+    type="text"
+    name="tensanpham"
+    value="<%= sanpham.tensanpham %>"
+    required
+  />
+
+  <label for="baiviet">Bài Viết:</label>
+  <textarea name="baiviet" required><%= sanpham.baiviet %></textarea>
+
+  <label for="gia">Giá:</label>
+  <input
+    type="number"
+    name="gia"
+    value="<%= sanpham.gia %>"
+    step="0.01"
+    required
+  />
+
+  <label for="phanloai">Phân Loại:</label>
+  <select name="phanloai" required>
+    <option value="Đơn" <%= sanpham.phanloai === 'Đơn' ? 'selected' : '' %>>Đơn</option>
+    <option value="Combo" <%= sanpham.phanloai === 'Combo' ? 'selected' : '' %>>Combo</option>
+    <option value="Liệu trình" <%= sanpham.phanloai === 'Liệu trình' ? 'selected' : '' %>>Liệu trình</option>
+  </select>
+
+  <label for="hinhanh">Chọn Hình Ảnh:</label>
+<input
+  type="file"
+  name="hinhanh"
+  accept="image/*" 
+  required
+/>
+
+  <label for="trangthai">Trạng Thái:</label>
+  <input
+    type="text"
+    name="trangthai"
+    value="<%= sanpham.trangthai %>"
+    required
+  />
+
+  <label for="loainhomsanpham_id">Loại Nhóm Sản Phẩm:</label>
+<select name="loainhomsanpham_id" required>
+  <% loaiSanPham.forEach(item => { %>
+    <option value="<%= item.loainhomsanpham_id %>" <%= item.loainhomsanpham_id === sanpham.loainhomsanpham_id ? 'selected' : '' %>><%= item.tenloainhomsanpham %></option>
+  <% }); %>
+</select>
+
+  <button type="submit">Cập Nhật</button>
+</form>
+<a href="/admin/sanpham">Quay lại danh sách sản phẩm</a>
+      </div>
+    </div>
+  </body>
+</html>

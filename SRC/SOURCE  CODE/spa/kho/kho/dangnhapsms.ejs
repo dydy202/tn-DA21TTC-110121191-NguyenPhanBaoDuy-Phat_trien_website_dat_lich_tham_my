@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      http-equiv="Cache-Control"
+      content="no-cache, no-store, must-revalidate"
+    />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <title>Đăng nhập bằng số điện thoại</title>
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #fff0f0;
+      }
+      .navbar {
+        background-color: #d8bea2 !important;
+      }
+      .navbar-logo {
+        border-radius: 50px;
+      }
+      .container-1 {
+        max-width: 400px;
+        margin: 50px auto;
+        padding: 20px;
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        text-align: center;
+      }
+      .login-button {
+        width: 100%;
+        padding: 10px;
+        background-color: #d8bea2;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: bold;
+        margin-bottom: 15px;
+      }
+      .login-button:hover {
+        background-color: #c49a82;
+      }
+      h2 {
+        font-size: 2.5em;
+        color: #333;
+        margin-bottom: 20px;
+      }
+      .message-success {
+        color: green;
+        font-weight: bold;
+        margin-bottom: 15px;
+      }
+      .message-error {
+        color: red;
+        font-weight: bold;
+        margin-bottom: 15px;
+      }
+      a {
+        color: #000000;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      .footer {
+        background: #d8bea2;
+        color: #000000;
+        padding: 20px 0;
+        font-family: Arial, sans-serif;
+      }
+      .footer-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+      }
+      .footer-grid > div {
+        flex: 1 1 300px;
+        padding: 15px;
+      }
+      .footer-grid h3 {
+        font-size: 20px;
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+      .footer-grid a {
+        color: #000000;
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+      .footer-grid a:hover {
+        color: #ffffff;
+      }
+      #recaptcha-container {
+        margin: 15px 0;
+        display: inline-block;
+      }
+      #status {
+        margin-top: 10px;
+        font-size: 1em;
+        color: #333;
+      }
+      .form-control {
+        margin-bottom: 15px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Menu -->
+    <nav class="navbar navbar-expand-lg navbar-light">
+      <div class="container">
+        <a class="navbar-brand" href="/trangchu">
+          <img
+            src="/Uploads/logo.png"
+            alt="Tiệm Nail Diamond"
+            class="navbar-logo"
+            style="max-height: 80px"
+          />
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="/trangchu">Trang chủ</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/gioithieu">Giới thiệu</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/dichvu">Dịch vụ</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/hocvien">Học viện</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/tintuc">Tin tức</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/album">Album</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/datlich?redirect=/datlich">Đặt lịch</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/lienhe">Liên hệ</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/dangnhap">Đăng nhập/Đăng ký</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Nội dung chính -->
+    <div class="container-1">
+      <h2>Đăng nhập bằng số điện thoại</h2>
+      <% if (message) { %>
+      <p
+        class="<%= message.includes('thành công') ? 'message-success' : 'message-error' %>"
+      >
+        <%= message %>
+      </p>
+      <% } %>
+      <div class="mb-3">
+        <label for="phoneNumber" class="form-label">Số điện thoại</label>
+        <input
+          type="text"
+          id="phoneNumber"
+          class="form-control"
+          placeholder="+84xxxxxxxxx"
+          required
+        />
+      </div>
+      <button onclick="sendOTP()" class="login-button">Gửi mã OTP</button>
+      <div id="recaptcha-container"></div>
+      <div class="mb-3" style="display: none" id="otpSection">
+        <label for="otpCode" class="form-label">Mã OTP</label>
+        <input
+          type="text"
+          id="otpCode"
+          class="form-control"
+          placeholder="Nhập mã OTP"
+        />
+      </div>
+      <button
+        onclick="verifyOTP()"
+        id="verifyButton"
+        class="login-button"
+        style="display: none"
+      >
+        Xác thực OTP
+      </button>
+      <p id="status"></p>
+      <p class="mt-3">
+        <a href="/dangnhap">Quay lại đăng nhập bằng email/mật khẩu</a>
+      </p>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div>
+            <h3>Địa chỉ</h3>
+            <p>Hẻm 300 Khóm 1 phường 8 Thành phố Trà Vinh</p>
+            <h3>Liên hệ</h3>
+            <p>Điện thoại: 0784265668</p>
+          </div>
+          <div>
+            <h3>Bản đồ</h3>
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d245.63861717762805!2d106.31644629814373!3d9.915804120820384!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1zaOG6u20gMzAwIEtow7NtIDEgcGjGsOG7nW5gIDggVGjDoG5oIHBo4buRIFRyw6AgVmluaA!5e0!3m2!1svi!2s!4v1744661746153!5m2!1svi!2s"
+              width="100%"
+              height="200"
+              style="border: 0; border-radius: 10px"
+              allowfullscreen=""
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+            ></iframe>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js"></script>
+    <script>
+      // Cấu hình Firebase từ dự án spanailroom-f84b7
+      const firebaseConfig = {
+        apiKey: "AIzaSyCs5FCqlq37usCC_F43_KPrscg7tJ8zcGw",
+        authDomain: "spanailroom-f84b7.firebaseapp.com",
+        projectId: "spanailroom-f84b7",
+        storageBucket: "spanailroom-f84b7.firebasestorage.app",
+        messagingSenderId: "965950928961",
+        appId: "1:965950928961:web:87a1e43ed42f0db2d16ec0",
+        measurementId: "G-G3596ZMNBK",
+      };
+
+      // Khởi động Firebase
+      firebase.initializeApp(firebaseConfig);
+
+      // Hàm gửi OTP
+      function sendOTP() {
+        const phoneNumber = document.getElementById("phoneNumber").value;
+        const status = document.getElementById("status");
+        status.textContent = "Đang gửi OTP...";
+
+        // Thiết lập reCAPTCHA
+        window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier(
+          "recaptcha-container",
+          {
+            size: "invisible",
+          }
+        );
+
+        firebase
+          .auth()
+          .signInWithPhoneNumber(phoneNumber, recaptchaVerifier)
+          .then((confirmationResult) => {
+            window.confirmationResult = confirmationResult;
+            status.textContent = "Mã OTP đã được gửi!";
+            document.getElementById("otpSection").style.display = "block";
+            document.getElementById("verifyButton").style.display = "block";
+          })
+          .catch((error) => {
+            status.textContent = "Lỗi khi gửi OTP: " + error.message;
+            console.error(error);
+          });
+      }
+
+      // Hàm xác thực OTP
+      function verifyOTP() {
+        const otpCode = document.getElementById("otpCode").value;
+        const status = document.getElementById("status");
+        status.textContent = "Đang xác thực OTP...";
+
+        confirmationResult
+          .confirm(otpCode)
+          .then((result) => {
+            const user = result.user;
+            status.textContent = "Đăng nhập thành công! UID: " + user.uid;
+            console.log("Số điện thoại: ", user.phoneNumber);
+
+            // Lưu thông tin người dùng vào session
+            fetch("/api/verify-sms", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                phoneNumber: user.phoneNumber,
+                uid: user.uid,
+              }),
+            })
+              .then((response) => response.json())
+              .then((data) => {
+                if (data.success) {
+                  const redirectUrl = "<%= redirect %>" || "/admin";
+                  window.location.href =
+                    redirectUrl +
+                    "?maTK=" +
+                    (data.maTK || user.uid) +
+                    "&phone=" +
+                    user.phoneNumber;
+                } else {
+                  status.textContent = "Lỗi lưu thông tin người dùng.";
+                }
+              })
+              .catch((error) => {
+                status.textContent = "Lỗi kết nối server: " + error.message;
+              });
+          })
+          .catch((error) => {
+            status.textContent = "Lỗi xác thực OTP: " + error.message;
+            console.error(error);
+          });
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,30 @@
+spa-management/
+├── config/
+│   └── db.js
+├── models/
+│   └── user.js
+├── routes/
+│   ├── admin.js
+│   └── index.js
+│   └── dichvu.js
+│   └── lichhen.js
+│   └── khachhang.js
+├── views/
+│   ├── admin.ejs
+│   ├── layout.ejs
+│   └── login.ejs
+│   └── dichvu.ejs
+│   └── lichhen.ejs
+│   └── khachhang.ejs
+│   └── suakhachhang.ejs
+│   └── themkhachhang.ejs
+├── public/
+│   └── styles.css
+├── app.js
+└── package.json
+
+  "main": "index.js",
+
+    /*"test": "echo \"Error: no test specified\" && exit 1" */
+
+    SENDGRID_API_KEY=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

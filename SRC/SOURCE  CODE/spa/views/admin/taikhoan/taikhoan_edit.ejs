@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sửa Tài Khoản</title>
+    <style>
+      /* Giữ nguyên CSS từ file bạn cung cấp */
+      body {
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f9;
+      }
+      .container {
+        display: flex;
+        min-height: 100vh;
+      }
+      .sidebar {
+        width: 250px;
+        background-color: #2c3e50;
+        color: white;
+        padding: 20px;
+        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+      }
+      .sidebar h2 {
+        font-size: 1.5em;
+        margin-bottom: 20px;
+        text-align: center;
+      }
+      .sidebar ul {
+        list-style: none;
+        padding: 0;
+      }
+      .sidebar ul li {
+        margin: 10px 0;
+      }
+      .sidebar ul li a {
+        color: white;
+        text-decoration: none;
+        font-size: 1.1em;
+        display: block;
+        padding: 10px;
+        border-radius: 5px;
+        transition: background 0.3s;
+      }
+      .sidebar ul li a:hover {
+        background-color: #34495e;
+      }
+      .content {
+        flex: 1;
+        padding: 30px;
+        background-color: white;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        margin: 20px;
+        border-radius: 8px;
+      }
+      .content h1 {
+        font-size: 2em;
+        color: #2c3e50;
+        margin-bottom: 20px;
+      }
+      .message {
+        color: #27ae60;
+        background-color: #e8f5e9;
+        padding: 10px;
+        border-radius: 5px;
+        margin-bottom: 20px;
+      }
+      .error {
+        color: #c0392b;
+        background-color: #fdedec;
+        padding: 10px;
+        border-radius: 5px;
+        margin-bottom: 20px;
+      }
+      .form-container {
+        margin-bottom: 20px;
+        padding: 20px;
+        background-color: #f9f9f9;
+        border-radius: 8px;
+      }
+      .form-container input,
+      .form-container select {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+      }
+      .form-container button {
+        padding: 10px 20px;
+        background-color: #27ae60;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      .form-container button:hover {
+        background-color: #219653;
+      }
+      .logout-btn {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #e74c3c;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background 0.3s;
+      }
+      .logout-btn:hover {
+        background-color: #c0392b;
+      }
+      @media (max-width: 768px) {
+        .container {
+          flex-direction: column;
+        }
+        .sidebar {
+          width: 100%;
+          padding: 10px;
+        }
+        .content {
+          margin: 10px;
+          padding: 15px;
+        }
+      }
+    </style>
+    <script>
+      function validateForm() {
+        const matKhau = document.getElementById("matKhau").value;
+        const xacNhanMatKhau = document.getElementById("xacNhanMatKhau").value;
+        if (matKhau && matKhau !== xacNhanMatKhau) {
+          alert("Mật khẩu và xác nhận mật khẩu không khớp!");
+          return false;
+        }
+        return true;
+      }
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="sidebar">
+        <h2>Quản Lý</h2>
+        <ul>
+          <li><a href="/admin/taikhoan">Tài Khoản</a></li>
+          <li><a href="/admin/quyen">Quyền</a></li>
+          <li><a href="/admin/khachhang">Khách Hàng</a></li>
+          <li><a href="/admin/nhanvien">Nhân Viên</a></li>
+          <li><a href="/admin/loaisanpham">Loại Sản Phẩm</a></li>
+          <li><a href="/admin/sanpham">Sản Phẩm</a></li>
+          <li><a href="/admin/lichhen">Lịch Hẹn</a></li>
+          <li><a href="/admin/baiviet">Bài Viết</a></li>
+          <li><a href="/admin/hoadon">Hóa Đơn</a></li>
+          <li><a href="/admin/chitiethoadon">Chi Tiết Hóa Đơn</a></li>
+          <li><a href="/admin/danhgia">Đánh Giá</a></li>
+        </ul>
+      </div>
+      <div class="content">
+        <h1>Sửa Tài Khoản</h1>
+        <% if (message) { %>
+        <p class="error"><%= message %></p>
+        <% } %>
+        <div class="form-container">
+          <form
+            action="/admin/taikhoan/edit"
+            method="POST"
+            onsubmit="return validateForm()"
+          >
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+            <input type="hidden" name="maTK" value="<%= taikhoan.MaTK %>" />
+            <label for="tenTK">Tên Tài Khoản:</label>
+            <input
+              type="text"
+              id="tenTK"
+              name="tenTK"
+              value="<%= taikhoan.TenTK %>"
+              required
+            />
+            <label for="matKhau">Mật Khẩu Mới (Để trống nếu không đổi):</label>
+            <input
+              type="password"
+              id="matKhau"
+              name="matKhau"
+              placeholder="Nhập mật khẩu mới"
+            />
+            <label for="xacNhanMatKhau">Xác Nhận Mật Khẩu Mới:</label>
+            <input
+              type="password"
+              id="xacNhanMatKhau"
+              name="xacNhanMatKhau"
+              placeholder="Xác nhận mật khẩu mới"
+            />
+            <label for="maQ">Quyền:</label>
+            <select id="maQ" name="maQ" required>
+              <% quyen.forEach(function(item) { %>
+              <option
+                value="<%= item.MaQ %>"
+                <%= taikhoan.MaQ === item.MaQ ? 'selected' : '' %>
+              >
+                <%= item.TenQ %>
+              </option>
+              <% }) %>
+            </select>
+            <button type="submit">Lưu Thay Đổi</button>
+          </form>
+        </div>
+        <a href="/admin/taikhoan" class="action-btn">Quay lại</a>
+      </div>
+    </div>
+  </body>
+</html>

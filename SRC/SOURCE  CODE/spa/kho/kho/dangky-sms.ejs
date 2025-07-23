@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      http-equiv="Cache-Control"
+      content="no-cache, no-store, must-revalidate"
+    />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <title>Đăng ký bằng số điện thoại</title>
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <!-- Menu -->
+    <nav class="navbar navbar-expand-lg navbar-light">
+      <div class="container">
+        <a class="navbar-brand" href="/trangchu">
+          <img
+            src="/uploads/logo.png"
+            alt="Tiệm Nail Diamond"
+            class="navbar-logo"
+            style="max-height: 80px"
+          />
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="/trangchu">Trang chủ</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/gioithieu">Giới thiệu</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/dichvu">Dịch vụ</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/hocvien">Học viện</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/tintuc">Tin tức</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/album">Album</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/datlich?redirect=/datlich">Đặt lịch</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/lienhe">Liên hệ</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/dangnhap">Đăng nhập/Đăng ký</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container-1">
+      <h2 class="text-center">Đăng ký bằng số điện thoại</h2>
+      <% if (message) { %>
+      <p
+        class="<%= message.includes('thành công') ? 'message-success' : 'message-error' %>"
+      >
+        <%= message %>
+      </p>
+      <% } %>
+      <form action="/dangky-sms" method="post" class="mb-3">
+        <div class="mb-3">
+          <label for="phoneNumber" class="form-label"
+            >Số điện thoại (VD: +84xxxxxxxxx)</label
+          >
+          <input
+            type="text"
+            id="phoneNumber"
+            name="phoneNumber"
+            class="form-control"
+            placeholder="+84xxxxxxxxx"
+            required
+          />
+        </div>
+        <button type="submit" class="login-button w-100">Gửi mã OTP</button>
+      </form>
+      <form
+        action="/verify-otp"
+        method="post"
+        id="otpForm"
+        style="display: none"
+      >
+        <div class="mb-3">
+          <label for="otp" class="form-label">Mã OTP</label>
+          <input
+            type="text"
+            id="otp"
+            name="otp"
+            class="form-control"
+            placeholder="Nhập mã OTP"
+            required
+          />
+        </div>
+        <button type="submit" class="login-button w-100">Xác thực OTP</button>
+      </form>
+      <p id="status" class="text-center"></p>
+      <p class="mt-3 text-center">
+        <a href="/dangnhap">Quay lại đăng nhập</a>
+      </p>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div>
+            <h3>Địa chỉ</h3>
+            <p>Hẻm 300 Khóm 1 phường 8 Thành phố Trà Vinh</p>
+            <h3>Liên hệ</h3>
+            <p>Điện thoại: 0784265668</p>
+          </div>
+          <div>
+            <h3>Bản đồ</h3>
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d245.63861717762805!2d106.31644629814373!3d9.915804120820384!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1zaOG6u20gMzAwIEtow7NtIDEgcGjGsOG7nW5nIDggVGjDoG5oIHBo4buRIFRyw6AgVmluaA!5e0!3m2!1svi!2s!4v1744661746153!5m2!1svi!2s"
+              width="100%"
+              height="200"
+              style="border: 0; border-radius: 10px"
+              allowfullscreen=""
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+            >
+            </iframe>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      // Hiển thị form OTP sau khi gửi mã thành công
+      const message = "<%= message %>";
+      if (message.includes("đã được gửi")) {
+        document.getElementById("otpForm").style.display = "block";
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quản Trị</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="sidebar">
+        <h2>Chọn mục để quản lý:</h2>
+        <ul>
+          <li><a href="/admin/taikhoan">Tài Khoản</a></li>
+          <li><a href="/admin/khachhang">Khách Hàng</a></li>
+          <li><a href="/admin/nhanvien">Nhân Viên</a></li>
+          <li><a href="/admin/loaisanpham">Loại Nhóm Sản Phẩm</a></li>
+          <li><a href="/admin/sanpham">Sản Phẩm</a></li>
+          <li><a href="/admin/lichhen">Lịch Hẹn</a></li>
+          <li><a href="/admin/hoadon">Hóa Đơn</a></li>
+          <li><a href="/admin/chitiethoadon">Chi Tiết Hóa Đơn</a></li>
+          <li><a href="/admin/danhgia">Đánh Giá</a></li>
+        </ul>
+      </div>
+      <div class="content">
+        <!-- nội dung -->
+        <h1>Thêm Lịch Hẹn</h1>
+        <form action="/admin/lichhen/themlichhen" method="POST">
+          <label for="khachhang_id">Khách Hàng ID:</label>
+          <input type="number" id="khachhang_id" name="khachhang_id" required />
+          <label for="nhanvien_id">Nhân Viên ID:</label>
+          <input type="number" id="nhanvien_id" name="nhanvien_id" required />
+          <label for="dichvu_id">Dịch Vụ ID:</label>
+          <input type="number" id="dichvu_id" name="dichvu_id" required />
+          <label for="ngayhen">Ngày Hẹn:</label>
+          <input type="date" id="ngayhen" name="ngayhen" required />
+          <label for="giohen">Giờ Hẹn:</label>
+          <input type="time" id="giohen" name="giohen" required />
+          <label for="ghichu">Ghi Chú:</label>
+          <textarea id="ghichu" name="ghichu"></textarea>
+          <button type="submit">Thêm Lịch Hẹn</button>
+        </form>
+        <a href="/admin/lichhen">Trở về danh sách Lịch Hẹn</a>
+      </div>
+    </div>
+  </body>
+</html>

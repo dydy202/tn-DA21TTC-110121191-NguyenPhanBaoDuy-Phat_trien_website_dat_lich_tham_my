@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quản lý bài viết</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+    <!-- Tích hợp CKEditor từ CDN -->
+    <script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Thêm bài viết mới</h1>
+      <form action="/baiviet/add" method="POST" enctype="multipart/form-data">
+        <div class="form-group">
+          <label for="MaSP">Mã sản phẩm:</label>
+          <select name="MaSP" id="MaSP" required>
+            <option value="">Chọn sản phẩm</option>
+            <% sanPhams.forEach(sp => { %>
+            <option value="<%= sp.MaSP %>"><%= sp.TenSP %></option>
+            <% }) %>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="MoTaBV">Mô tả bài viết:</label>
+          <textarea name="MoTaBV" id="MoTaBV" required></textarea>
+        </div>
+        <div class="form-group">
+          <label for="HinhAnhBV">Hình ảnh bài viết:</label>
+          <input type="file" name="HinhAnhBV" id="HinhAnhBV" accept="image/*" />
+        </div>
+        <button type="submit">Thêm bài viết</button>
+      </form>
+
+      <h2>Danh sách bài viết</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Mã bài viết</th>
+            <th>Mã sản phẩm</th>
+            <th>Mô tả</th>
+            <th>Hình ảnh</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% baiViets.forEach(bv => { %>
+          <tr>
+            <td><%= bv.MaBV %></td>
+            <td><%= bv.MaSP %></td>
+            <td><%= bv.MoTaBV %></td>
+            <td>
+              <img
+                src="<%= bv.HinhAnhBV %>"
+                alt="Hình ảnh bài viết"
+                width="100"
+              />
+            </td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+
+    <script>
+      // Khởi tạo CKEditor cho textarea MoTaBV
+      CKEDITOR.replace("MoTaBV", {
+        height: 300,
+        filebrowserUploadUrl: "/upload", // Đường dẫn để tải hình ảnh lên (tùy chỉnh nếu cần)
+        filebrowserUploadMethod: "form",
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quản Lý Sản Phẩm</title>
+    <style>
+      /* public/css/style.css */
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #fffaf0;
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .navbar {
+        background-color: #d8bea2 !important;
+      }
+
+      .navbar .nav-link,
+      .navbar .navbar-brand {
+        color: #000 !important;
+      }
+
+      .navbar .nav-link:hover {
+        color: #fff !important;
+      }
+
+      .navbar-logo {
+        border-radius: 50px;
+        max-height: 80px;
+      }
+
+      .main-content {
+        max-width: 1000px;
+        margin: 40px auto;
+        padding: 20px;
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .table th,
+      .table td {
+        vertical-align: middle;
+      }
+
+      .table img {
+        max-width: 100px;
+        border-radius: 5px;
+      }
+
+      .alert {
+        margin-bottom: 20px;
+      }
+
+      .footer {
+        background: #d8bea2;
+        color: #000;
+        padding: 20px 0;
+        margin-top: auto;
+      }
+
+      .footer-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+      }
+
+      .footer-grid > div {
+        flex: 1 1 300px;
+        padding: 15px;
+      }
+
+      .footer-grid h2 {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 10px;
+        text-align: left;
+      }
+
+      .footer-grid h3 {
+        font-size: 20px;
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+
+      .footer-grid p {
+        font-size: 0.9em;
+        margin-bottom: 5px;
+      }
+
+      .footer-grid a {
+        color: #000;
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+
+      .footer-grid a:hover {
+        color: #fff;
+      }
+
+      .container {
+        width: 100%;
+        margin: 0;
+        padding: 0 15px;
+        display: flex;
+        min-height: 100vh;
+      }
+
+      .btn-primary {
+        background-color: #d8bea2;
+        border-color: #d8bea2;
+      }
+
+      .btn-primary:hover {
+        background-color: #c49a82;
+        border-color: #c49a82;
+      }
+
+      .btn-secondary {
+        background-color: #6c757d;
+        border-color: #6c757d;
+      }
+
+      .btn-secondary:hover {
+        background-color: #5a6268;
+        border-color: #5a6268;
+      }
+
+      a {
+        color: #000;
+        text-decoration: none;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+
+      .pagination {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+      }
+
+      .pagination a {
+        margin: 0 5px;
+        padding: 8px 12px;
+        border: 1px solid #d8bea2;
+        border-radius: 5px;
+        text-decoration: none;
+        color: #000;
+      }
+
+      .pagination a.active {
+        background-color: #d8bea2;
+        color: #fff;
+      }
+
+      .pagination a:hover {
+        background-color: #c49a82;
+        color: #fff;
+      }
+
+      .pagination a.disabled {
+        color: #6c757d;
+        pointer-events: none;
+      }
+
+      /* Kiểu cho admin.ejs và sanpham.ejs */
+      .sidebar {
+        width: 145px;
+        background-color: #c49a82;
+        color: #000;
+        padding: 20px;
+        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+      }
+
+      .sidebar h2 {
+        font-size: 1.5em;
+        margin-bottom: 20px;
+        text-align: center;
+      }
+
+      .sidebar ul {
+        list-style: none;
+        padding: 0;
+      }
+
+      .sidebar ul li {
+        margin: 10px 0;
+      }
+
+      .sidebar ul li a {
+        color: #000;
+        text-decoration: none;
+        font-size: 1.1em;
+        display: block;
+        padding: 10px;
+        border-radius: 5px;
+        transition: background 0.3s;
+      }
+
+      .sidebar ul li a:hover {
+        background-color: #d8bea2;
+        color: #fff;
+      }
+
+      .content {
+        flex: 1;
+        padding: 30px;
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        margin: 20px;
+        border-radius: 8px;
+      }
+
+      .content h1 {
+        font-size: 2em;
+        color: #000;
+        margin-bottom: 10px;
+      }
+
+      .content .welcome {
+        font-size: 1.2em;
+        color: #6c757d;
+        margin-bottom: 20px;
+      }
+
+      .message {
+        color: #000;
+        background-color: #fffaf0;
+        padding: 10px;
+        border: 1px solid #d8bea2;
+        border-radius: 5px;
+        margin-bottom: 20px;
+      }
+
+      .error {
+        color: #000;
+        background-color: #f8f9fa;
+        padding: 10px;
+        border: 1px solid #6c757d;
+        border-radius: 5px;
+        margin-bottom: 20px;
+      }
+
+      .logout-btn {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #d8bea2;
+        color: #000;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background 0.3s;
+      }
+
+      .logout-btn:hover {
+        background-color: #c49a82;
+        color: #fff;
+      }
+
+      /* Kiểu riêng cho sanpham.ejs */
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+      }
+
+      table,
+      th,
+      td {
+        border: 1px solid #ddd;
+      }
+
+      th,
+      td {
+        padding: 12px;
+        text-align: left;
+      }
+
+      th {
+        background-color: #d8bea2;
+        color: #000;
+      }
+
+      tr:nth-child(even) {
+        background-color: #f9f9f9;
+      }
+
+      tr:hover {
+        background-color: #f1f1f1;
+      }
+
+      .action-btn {
+        padding: 8px 12px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        color: #000;
+        display: inline-block;
+        margin-right: 5px;
+        margin-bottom: 5px;
+      }
+
+      .add-btn {
+        background-color: #d8bea2;
+      }
+
+      .add-btn:hover {
+        background-color: #c49a82;
+        color: #fff;
+      }
+
+      .edit-btn {
+        background-color: #d8bea2;
+      }
+
+      .edit-btn:hover {
+        background-color: #c49a82;
+        color: #fff;
+      }
+
+      .delete-btn {
+        background-color: #6c757d;
+      }
+
+      .delete-btn:hover {
+        background-color: #5a6268;
+        color: #fff;
+      }
+
+      .form-container {
+        margin-bottom: 20px;
+        padding: 20px;
+        background-color: #fff;
+        border: 1px solid #d8bea2;
+        border-radius: 8px;
+      }
+
+      .form-container input,
+      .form-container select {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+      }
+
+      .form-container button {
+        padding: 10px 20px;
+        background-color: #d8bea2;
+        color: #000;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      .form-container button:hover {
+        background-color: #c49a82;
+        color: #fff;
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          flex-direction: column;
+        }
+        .sidebar {
+          width: 100%;
+          padding: 10px;
+        }
+        .content {
+          margin: 10px;
+          padding: 15px;
+        }
+        table {
+          font-size: 0.9em;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="sidebar">
+        <h2>Quản Lý</h2>
+        <ul>
+          <li><a href="/admin/taikhoan">Tài Khoản</a></li>
+          <li><a href="/admin/khachhang">Khách Hàng</a></li>
+          <li><a href="/admin/nhanvien">Nhân Viên</a></li>
+          <li><a href="/admin/loaisanpham">Loại Sản Phẩm</a></li>
+          <li><a href="/admin/sanpham">Sản Phẩm</a></li>
+          <li><a href="/admin/lichhen">Lịch Hẹn</a></li>
+          <li><a href="/admin/baiviet">Bài Viết</a></li>
+          <li><a href="/admin/hoadon">Hóa Đơn</a></li>
+          <li><a href="/admin/danhgia">Đánh Giá</a></li>
+          <li><a href="/admin/thongke">Thống Kê</a></li>
+          <li><a href="/admin/nghiphep">Nghỉ Phép</a></li>
+        </ul>
+      </div>
+      <div class="content">
+        <h1>Quản Lý Sản Phẩm</h1>
+        <% if (message) { %>
+        <p
+          class="<% if (message.includes('lỗi')) { %>error<% } else { %>message<% } %>"
+        >
+          <%= message %>
+        </p>
+        <% } %>
+        <a href="/admin/sanpham/add" class="action-btn add-btn"
+          >Thêm Sản Phẩm</a
+        >
+        <a href="/dangxuat" class="logout-btn">Đăng Xuất</a><br /><br />
+        <% if (sanpham && sanpham.length > 0) { %>
+        <table>
+          <thead>
+            <tr>
+              <th>Số Thứ Tự</th>
+              <th>Tên SP</th>
+              <th>Loại SP</th>
+              <th>Giá SP</th>
+              <th>Phạm Loại</th>
+              <th>Trạng Thái</th>
+              <th>Hành Động</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% sanpham.forEach(function(item, index) { %>
+            <tr>
+              <td><%= (currentPage - 1) * 10 + index + 1 %></td>
+              <td><%= item.TenSP %></td>
+              <td><%= item.TenLSP %></td>
+              <td><%= item.GiaSP.toLocaleString('vi-VN') %></td>
+              <td><%= item.PhamLoaiSP %></td>
+              <td><%= item.TrangThaiSP || 'N/A' %></td>
+              <td>
+                <a
+                  href="/admin/sanpham/edit/<%= item.MaSP %>"
+                  class="action-btn edit-btn"
+                  >Sửa</a
+                >
+                <form
+                  action="/admin/sanpham/delete"
+                  method="POST"
+                  style="display: inline"
+                >
+                  <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+                  <input type="hidden" name="maSP" value="<%= item.MaSP %>" />
+                  <button
+                    type="submit"
+                    class="action-btn delete-btn"
+                    onclick="return confirm('Bạn có chắc muốn xóa?')"
+                  >
+                    Xóa
+                  </button>
+                </form>
+              </td>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
+        <!-- Phân trang -->
+        <div class="pagination">
+          <% if (currentPage > 1) { %>
+          <a href="/admin/sanpham?page=<%= currentPage - 1 %>">« Trước</a>
+          <% } else { %>
+          <a class="disabled">« Trước</a>
+          <% } %> <% for (let i = 1; i <= totalPages; i++) { %>
+          <a
+            href="/admin/sanpham?page=<%= i %>"
+            class="<%= i === currentPage ? 'active' : '' %>"
+          >
+            <%= i %>
+          </a>
+          <% } %> <% if (currentPage < totalPages) { %>
+          <a href="/admin/sanpham?page=<%= currentPage + 1 %>">Sau »</a>
+          <% } else { %>
+          <a class="disabled">Sau »</a>
+          <% } %>
+        </div>
+        <% } else { %>
+        <p>Không có sản phẩm nào.</p>
+        <% } %>
+      </div>
+    </div>
+  </body>
+</html>

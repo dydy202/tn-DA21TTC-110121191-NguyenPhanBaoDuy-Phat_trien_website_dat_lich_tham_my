@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quản Trị</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="sidebar">
+        <h2>Chọn mục để quản lý:</h2>
+        <ul>
+          <li><a href="/admin/khachhang">Khách Hàng</a></li>
+          <li><a href="/admin/nhanvien">Nhân Viên</a></li>
+          <li><a href="/admin/loaidichvu">Loại Dịch Vụ</a></li>
+          <li><a href="/admin/dichvu">Dịch Vụ</a></li>
+          <li><a href="/admin/loaisanpham">Loại Sản Phẩm</a></li>
+          <li><a href="/admin/sanpham">Sản Phẩm</a></li>
+          <li><a href="/admin/lichhen">Lịch Hẹn</a></li>
+          <li><a href="/admin/hoadon">Hóa Đơn</a></li>
+          <li><a href="/admin/danhgia">Đánh Giá</a></li>
+        </ul>
+      </div>
+      <div class="content">
+        <h1>Sửa Thông Tin Khách Hàng</h1>
+
+        <form
+          action="/khachhang/suakhachhang/<%= kh.khachhang_id %>"
+          method="POST"
+        >
+          <label for="hotenkhachhang">Họ và tên:</label>
+          <input
+            type="text"
+            name="hotenkhachhang"
+            value="<%= kh.hotenkhachhang %>"
+            required
+          />
+
+          <label for="email">Email:</label>
+          <input type="email" name="email" value="<%= kh.email %>" required />
+
+          <label for="sodienthoai">Số điện thoại:</label>
+          <input
+            type="text"
+            name="sodienthoai"
+            value="<%= kh.sodienthoai %>"
+            required
+          />
+
+          <button type="submit">Cập Nhật</button>
+        </form>
+
+        <a href="/khachhang">Quay lại danh sách khách hàng</a>
+      </div>
+    </div>
+  </body>
+</html>

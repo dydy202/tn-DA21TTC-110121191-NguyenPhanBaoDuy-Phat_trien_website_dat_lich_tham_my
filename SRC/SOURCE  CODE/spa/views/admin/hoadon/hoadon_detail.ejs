@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chi Tiết Hóa Đơn</title>
+    <style>
+      body {
+        font-family: "Arial", sans-serif;
+        margin: 0;
+        padding: 20px;
+        background-color: #f4f4f9;
+      }
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        background-color: white;
+        padding: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+      }
+      h1 {
+        text-align: center;
+        color: #2c3e50;
+      }
+      .invoice-info,
+      .customer-info,
+      .items {
+        margin-bottom: 20px;
+      }
+      .invoice-info p,
+      .customer-info p {
+        margin: 5px 0;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+      }
+      table,
+      th,
+      td {
+        border: 1px solid #ddd;
+      }
+      th,
+      td {
+        padding: 12px;
+        text-align: left;
+      }
+      th {
+        background-color: #2c3e50;
+        color: white;
+      }
+      .total {
+        text-align: right;
+        font-weight: bold;
+        margin-top: 10px;
+      }
+      .actions {
+        text-align: center;
+      }
+      .action-btn {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        color: white;
+        margin: 0 5px;
+      }
+      .print-btn {
+        background-color: #3498db;
+      }
+      .export-btn {
+        background-color: #27ae60;
+      }
+      .back-btn {
+        background-color: #e74c3c;
+      }
+      .action-btn:hover {
+        opacity: 0.9;
+      }
+      @media print {
+        .actions {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>HÓA ĐƠN</h1>
+      <div class="invoice-info">
+        <p><strong>Mã hóa đơn:</strong> <%= hoadon.MaHD %></p>
+        <p>
+          <strong>Ngày lập:</strong> <%= new
+          Date(hoadon.NgayLapHD).toLocaleDateString('vi-VN') %>
+        </p>
+        <p><strong>Trạng thái:</strong> <%= hoadon.TrangThaiHD %></p>
+        <p>
+          <strong>Phương thức thanh toán:</strong> <%=
+          hoadon.PhuongThucThanhToan || 'Chưa xác định' %>
+        </p>
+      </div>
+      <div class="customer-info">
+        <p><strong>Khách hàng:</strong> <%= hoadon.HoTenKH %></p>
+        <p><strong>Email:</strong> <%= hoadon.EmailKH %></p>
+        <p><strong>Số điện thoại:</strong> <%= hoadon.SoDienThoaiKH %></p>
+      </div>
+      <div class="items">
+        <h3>Chi tiết hóa đơn</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Sản phẩm</th>
+              <th>Số lượng</th>
+              <th>Đơn giá</th>
+              <th>Thành tiền</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% chitiethoadon.forEach(item => { %>
+            <tr>
+              <td><%= item.TenSP %></td>
+              <td><%= item.SoLuong %></td>
+              <td>
+                <%= item.DonGia.toLocaleString('vi-VN', { style: 'currency',
+                currency: 'VND' }) %>
+              </td>
+              <td>
+                <%=(item.SoLuong * item.DonGia).toLocaleString('vi-VN', { style:
+                'currency', currency: 'VND' }) %>
+              </td>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
+        <p class="total">
+          Tổng tiền: <%= hoadon.TongTien.toLocaleString('vi-VN', { style:
+          'currency', currency: 'VND' }) %>
+        </p>
+      </div>
+      <div class="actions">
+        <button class="action-btn print-btn" onclick="window.print()">
+          In hóa đơn
+        </button>
+        <a
+          href="/admin/hoadon/export/<%= hoadon.MaHD %>"
+          class="action-btn export-btn"
+          >Xuất PDF</a
+        >
+        <a href="/admin/lichhen" class="action-btn back-btn">Quay lại</a>
+      </div>
+    </div>
+  </body>
+</html>

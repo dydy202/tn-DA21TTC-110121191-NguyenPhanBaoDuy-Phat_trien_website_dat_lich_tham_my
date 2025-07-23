@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quản Trị</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="sidebar">
+        <h2>Chọn mục để quản lý:</h2>
+        <ul>
+          <li><a href="/admin/taikhoan">Tài Khoản</a></li>
+          <li><a href="/admin/khachhang">Khách Hàng</a></li>
+          <li><a href="/admin/nhanvien">Nhân Viên</a></li>
+          <li><a href="/admin/loaisanpham">Loại Nhóm Sản Phẩm</a></li>
+          <li><a href="/admin/sanpham">Sản Phẩm</a></li>
+          <li><a href="/admin/lichhen">Lịch Hẹn</a></li>
+          <li><a href="/admin/hoadon">Hóa Đơn</a></li>
+          <li><a href="/admin/chitiethoadon">Chi Tiết Hóa Đơn</a></li>
+          <li><a href="/admin/danhgia">Đánh Giá</a></li>
+        </ul>
+      </div>
+      <div class="content">
+        <!-- nội dung -->
+        <h1>Thêm Sản Phẩm</h1>
+        <form action="/admin/sanpham/themsanpham" method="POST">
+          <label for="tensanpham">Tên Sản Phẩm:</label>
+          <input type="text" id="tensanpham" name="tensanpham" required />
+          <label for="mota">Mô Tả:</label>
+          <textarea id="mota" name="mota"></textarea>
+          <label for="gia">Giá:</label>
+          <input type="number" id="gia" name="gia" step="0.01" required />
+          <label for="loaisanpham_id">Loại Dịch Vụ ID:</label>
+          <input
+            type="number"
+            id="loaisanpham_id"
+            name="loaisanpham_id"
+            required
+          />
+          <label for="soluongton">Số Lượng Tồn Kho:</label>
+          <input type="number" id="soluongton" name="soluongton" required />
+          <button type="submit">Thêm Sản Phẩm</button>
+        </form>
+        <a href="/admin/sanpham">Trở về danh sách sản phẩm</a>
+      </div>
+    </div>
+  </body>
+</html>

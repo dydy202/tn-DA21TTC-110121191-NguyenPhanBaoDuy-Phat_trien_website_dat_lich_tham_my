@@ -1,0 +1,120 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0; /* Loại bỏ margin mặc định */
+  height: 100vh; /* Chiều cao toàn bộ viewport */
+}
+
+.container {
+  display: flex; /* Sử dụng flexbox để tạo bố cục ngang */
+  height: 100%; /* Đảm bảo container chiếm toàn bộ chiều cao */
+}
+
+.sidebar {
+  width: 25%; /* Chiều rộng của sidebar */
+  padding: 20px;
+  background-color: #f2f2f2; /* Màu nền cho sidebar */
+  height: auto; /* Chiều cao sidebar tự động */
+}
+
+.content {
+  width: 75%; /* Chiều rộng của phần nội dung */
+  padding: 20px;
+  overflow-y: auto; /* Thêm thanh cuộn nếu nội dung vượt quá chiều cao */
+}
+
+h1,
+h2 {
+  color: #333;
+}
+
+ul {
+  list-style-type: none; /* Loại bỏ dấu chấm đầu dòng */
+  padding: 0; /* Loại bỏ padding */
+}
+
+ul li {
+  margin: 10px 0; /* Khoảng cách giữa các mục */
+}
+
+a {
+  text-decoration: none; /* Không gạch chân */
+  color: #000000; /* Màu chữ cho liên kết */
+}
+
+a:hover {
+  text-decoration: underline; /* Gạch chân khi di chuột */
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+tr:hover {
+  background-color: #f1f1f1;
+}
+
+button {
+  background-color: #7be07e; /* Màu nền */
+  color: white; /* Màu chữ */
+  border: none; /* Không viền */
+  padding: 10px 15px; /* Khoảng cách bên trong */
+  text-align: center; /* Canh giữa */
+  text-decoration: none; /* Không gạch chân */
+  display: inline-block; /* Hiển thị inline */
+  margin: 4px 2px; /* Khoảng cách giữa các nút */
+  cursor: pointer; /* Con trỏ chuột */
+  border-radius: 5px; /* Bo góc */
+}
+
+button:hover {
+  background-color: #45a049; /* Màu khi di chuột */
+}
+
+/* Modal (Popup) */
+.modal {
+  display: none; /* Ẩn modal khi chưa sử dụng */
+  position: fixed; /* Để modal nằm cố định trên màn hình */
+  z-index: 1; /* Đảm bảo modal ở trên cùng */
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto; /* Nếu nội dung quá dài, sẽ có thanh cuộn */
+  background-color: rgba(0, 0, 0, 0.4); /* Màu nền tối khi modal hiển thị */
+}
+
+/* Nội dung modal */
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+
+/* Nút đóng modal */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}

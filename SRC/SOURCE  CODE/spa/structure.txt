@@ -1,0 +1,68 @@
+�   app.js
+�   cautruc.txt
+�   form
+�   moment.js
+�   package-lock.json
+�   package.json
+�   structure.txt
+�   
++---config
+�       db.js
+�       
++---luu
+�       dichvu.ejs
+�       dichvu.js
+�       loaidichvu.ejs
+�       loaidichvu.js
+�       suadichvu.ejs
+�       sualoaidichvu.ejs
+�       themdichvu.ejs
+�       themloaidichvu.ejs
+�       
++---models
+�       user.js
+�       
++---node_modules
++---public
+�       styles.css
+�       
++---routes
+�       admin.js
+�       chitiethoadon.js
+�       danhgia.js
+�       hoadon.js
+�       index.js
+�       khachhang.js
+�       lichhen.js
+�       loaisanpham.js
+�       nhanvien.js
+�       sanpham.js
+�       taikhoan.js
+�       
++---uploads
++---views
+        admin.ejs
+        chitiethoadon.ejs
+        danhgia.ejs
+        hoadon.ejs
+        khachhang.ejs
+        lichhen.ejs
+        loaisanpham.ejs
+        login.ejs
+        nhanvien.ejs
+        sanpham.ejs
+        suahoadon.ejs
+        suakhachhang.ejs
+        sualichhen.ejs
+        sualoaisanpham.ejs
+        suanhanvien.ejs
+        suasanpham.ejs
+        taikhoan.ejs
+        themdanhgia.ejs
+        themhoadon.ejs
+        themkhachhang.ejs
+        themlichhen.ejs
+        themloaisanpham.ejs
+        themnhanvien.ejs
+        themsanpham.ejs
+        

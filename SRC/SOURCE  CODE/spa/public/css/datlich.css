@@ -1,0 +1,55 @@
+/* public/css/datlich.css */
+body {
+  font-family: Arial, sans-serif;
+  background: #f6f6f6;
+  text-align: center;
+}
+
+.container {
+  margin: 50px auto;
+  width: 600px;
+  background: white;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.weekdays,
+.days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.weekdays div {
+  font-weight: bold;
+}
+
+.day,
+.empty {
+  height: 45px;
+  line-height: 45px;
+  border-radius: 30px;
+  background-color: transparent;
+  color: #333;
+}
+
+.day.active {
+  background-color: #d2b48c;
+  color: black;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.day.active:hover {
+  background-color: #c19a6b;
+}
+
+.back-link {
+  display: inline-block;
+  margin-top: 20px;
+  text-decoration: none;
+  color: #c19a6b;
+}

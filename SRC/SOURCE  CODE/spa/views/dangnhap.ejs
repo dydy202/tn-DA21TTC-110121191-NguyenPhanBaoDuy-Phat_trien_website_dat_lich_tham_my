@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      http-equiv="Cache-Control"
+      content="no-cache, no-store, must-revalidate"
+    />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <title>Đăng nhập</title>
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #fffaf0;
+      }
+      .banner {
+        background: url("banner.jpg") no-repeat center;
+        background-size: cover;
+        height: 500px;
+        color: rgb(0, 0, 0);
+        text-align: center;
+        padding-top: 200px;
+      }
+      .banner h1 {
+        font-size: 4em;
+      }
+      .service-section {
+        padding: 50px 0;
+        text-align: center;
+      }
+      .main-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 80%;
+        margin: 0 auto;
+        text-align: center;
+      }
+      .carousel-inner {
+        border-radius: 10px;
+        overflow: hidden;
+      }
+      .carousel-inner img {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+      }
+      .carousel-item img {
+        border-radius: 20px;
+        object-fit: cover;
+        border: none !important;
+      }
+      .slide,
+      .carousel,
+      .carousel-inner,
+      .carousel-item {
+        border-bottom: none !important;
+      }
+      .slide {
+        margin-bottom: 30px;
+      }
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 15px;
+      }
+      .instagram {
+        padding: 60px 0;
+        background-color: #fff0f0;
+        border-top: none;
+      }
+      .nailit {
+        background-color: #fff0f0;
+      }
+      #nailit {
+        padding: 60px 0;
+        background-color: #fff0f0;
+      }
+      .section-title {
+        margin-bottom: 20px;
+        font-size: 2.5em;
+        color: #333;
+      }
+      .section-title span {
+        color: #d8bea2;
+        font-weight: bold;
+      }
+      .button-c {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #d8bea2;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+      }
+      .button-c:hover {
+        background-color: #c49a82;
+      }
+      .service-item h3 {
+        font-size: 23px;
+      }
+      .service-item p {
+        font-size: 19px;
+      }
+      .footer {
+        background: #d8bea2;
+        color: #000;
+        padding: 20px 0;
+        margin-top: auto;
+      }
+      .footer-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+      }
+      .footer-grid > div {
+        flex: 1 1 300px;
+        padding: 15px;
+      }
+      .footer-grid h2 {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+      .footer-grid h3 {
+        font-size: 20px;
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+      .footer-grid p {
+        font-size: 0.9em; /* Giảm kích thước chữ */
+        margin-bottom: 5px;
+      }
+      .footer-grid a {
+        color: #000;
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+      .footer-grid a:hover {
+        color: #fff;
+      }
+      h2 {
+        font-size: 2.5em;
+      }
+      h3 {
+        font-size: 1.5em;
+      }
+      p {
+        font-size: 1.2em;
+      }
+      .message-success,
+      .message-error {
+        transition: opacity 0.5s ease-out;
+      }
+      .fade-out {
+        opacity: 0;
+      }
+      .navbar {
+        background-color: #d8bea2 !important;
+      }
+      .navbar-logo {
+        border-radius: 50px;
+      }
+      button {
+        width: 100%;
+        padding: 10px;
+        background-color: #d8bea2;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: bold;
+      }
+      button:hover {
+        background-color: #c49a82;
+      }
+      .login-button {
+        width: 100%;
+        padding: 10px;
+        background-color: #d8bea2;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: bold;
+      }
+      .login-button:hover {
+        background-color: #c49a82;
+      }
+      .container-1 {
+        max-width: 400px;
+        margin: 50px auto;
+        padding: 20px;
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+      .message-error {
+        color: red;
+        font-weight: bold;
+      }
+      .message-success {
+        color: green;
+        font-weight: bold;
+      }
+      a {
+        color: #000000;
+        text-decoration: none;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Menu -->
+    <nav class="navbar navbar-expand-lg navbar-light">
+      <div class="container">
+        <a class="navbar-brand" href="/trangchu">
+          <img
+            src="/uploads/logo.png"
+            alt="Tiệm Nail Diamond"
+            class="navbar-logo"
+            style="max-height: 80px"
+          />
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="/trangchu">Trang chủ</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/gioithieu">Giới thiệu</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/dichvu">Dịch vụ</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/hocvien">Học viện</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/tintuc">Tin tức</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/album">Album</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/datlich?redirect=/datlich">Đặt lịch</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/lienhe">Liên hệ</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/dangnhap">Đăng nhập/Đăng ký</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container-1">
+      <h2 class="text-center">Đăng nhập</h2>
+      <% if (message) { %>
+      <p
+        class="<%= message.includes('thành công') ? 'message-success' : 'message-error' %>"
+      >
+        <%= message %>
+      </p>
+      <% } %>
+      <form method="POST" action="/dangnhap">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+        <input type="hidden" name="redirect" value="<%= redirect || '' %>" />
+        <div class="mb-3">
+          <label for="username" class="form-label">Email</label>
+          <input
+            type="text"
+            id="username"
+            name="username"
+            class="form-control"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="password" class="form-label">Mật khẩu</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            class="form-control"
+            required
+          />
+        </div>
+        <button type="submit" class="login-button w-100">Đăng nhập</button>
+      </form>
+      <p class="mt-3 text-center">
+        <a href="/quenmatkhau">Quên mật khẩu?</a> |
+        <a href="/dangky">Đăng ký</a>
+      </p>
+    </div>
+    <!-- <script>
+      document.querySelector("form").addEventListener("submit", (e) => {
+        const csrfToken = document.querySelector('input[name="_csrf"]').value;
+        console.log("CSRF Token from form:", csrfToken);
+      });
+    </script> -->
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div>
+            <h2>Tiệm nail Diamond</h2>
+            <h3>Địa chỉ</h3>
+            <p>Hẻm 300, Khóm 1, Phường 8, Thành phố Trà Vinh, tỉnh Trà Vinh</p>
+            <h3>Liên hệ</h3>
+            <p>Điện thoại: 0784265668</p>
+            <p>Email: npb.duy.2002@gmail.com</p>
+          </div>
+          <div>
+            <h3>Bản đồ</h3>
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d245.63861717762805!2d106.31644629814373!3d9.915804120820384!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1zaOG6u20gMzAwIEtow7NtIDEgcGjGsOG7nW5nIDggVGjDoG5oIHBo4buRIFRyw6AgVmluaA!5e0!3m2!1svi!2s!4v1744661746153!5m2!1svi!2s"
+              width="100%"
+              height="200"
+              style="border: 0; border-radius: 10px"
+              allowfullscreen=""
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+            ></iframe>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+    <!-- Thêm mã Crisp -->
+    <script type="text/javascript">
+      window.CRISP_WEBSITE_ID = "1943f314-1b1a-49aa-9069-02eb9fe4db8a";
+      (function () {
+        var d = document;
+        var s = d.createElement("script");
+        s.src = "https://client.crisp.chat/l.js";
+        s.async = 1;
+        d.getElementsByTagName("head")[0].appendChild(s);
+      })();
+    </script>
+  </body>
+</html>

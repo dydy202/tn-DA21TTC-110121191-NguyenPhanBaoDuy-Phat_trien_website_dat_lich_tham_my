@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quản Trị</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="sidebar">
+        <h2>Chọn mục để quản lý:</h2>
+        <ul>
+          <li><a href="/admin/taikhoan">Tài Khoản</a></li>
+          <li><a href="/admin/khachhang">Khách Hàng</a></li>
+          <li><a href="/admin/nhanvien">Nhân Viên</a></li>
+          <li><a href="/admin/loaisanpham">Loại Nhóm Sản Phẩm</a></li>
+          <li><a href="/admin/sanpham">Sản Phẩm</a></li>
+          <li><a href="/admin/lichhen">Lịch Hẹn</a></li>
+          <li><a href="/admin/hoadon">Hóa Đơn</a></li>
+          <li><a href="/admin/chitiethoadon">Chi Tiết Hóa Đơn</a></li>
+          <li><a href="/admin/danhgia">Đánh Giá</a></li>
+        </ul>
+      </div>
+      <div class="content">
+        <!-- nội dung -->
+        <h1>Sửa Lịch Hẹn</h1>
+        <form action="/admin/lichhen/sualichhen/<%= lichhen.lichhen_id %>" method="POST">
+          <!-- Khách Hàng ID: chỉ hiển thị tên khách hàng, không cho sửa -->
+          <label for="khachhang_id">Khách Hàng:</label>
+          <input type="text" value="<%= lichhen.hotenkhachhang %>" disabled />
+          <input type="hidden" name="khachhang_id" value="<%= lichhen.khachhang_id %>" />
+        
+          <!-- Nhân Viên: Hiển thị tên nhân viên và cho phép chọn nhân viên khác -->
+          <label for="nhanvien_id">Nhân Viên:</label>
+          <select name="nhanvien_id" required>
+            <% nhanviens.forEach(nv => { %>
+              <option value="<%= nv.nhanvien_id %>" <%= nv.nhanvien_id === lichhen.nhanvien_id ? 'selected' : '' %>>
+                <%= nv.hotennhanvien %>
+              </option>
+            <% }); %>
+          </select>
+
+          <!-- Sản Phẩm: Hiển thị tên sản phẩm và cho phép chọn sản phẩm khác -->
+          <label for="sanpham_id">Sản Phẩm:</label>
+          <select name="sanpham_id" required>
+            <% sanphams.forEach(sp => { %>
+              <option value="<%= sp.sanpham_id %>" <%= sp.sanpham_id === lichhen.sanpham_id ? 'selected' : '' %>>
+                <%= sp.tensanpham %>
+              </option>
+            <% }); %>
+          </select>
+        
+          <!-- Ngày Hẹn -->
+          <label for="ngayhen">Ngày Hẹn:</label>
+          <input type="date" name="ngayhen" value="<%= lichhen.ngayhen.toISOString().split('T')[0] %>" required />
+        
+          <!-- Giờ Hẹn -->
+          <label for="giohen">Giờ Hẹn:</label>
+          <input type="time" name="giohen" value="<%= lichhen.giohen %>" required />
+        
+          <label for="soluong">Số Lượng:</label>
+          <input type="number" name="soluong" value="<%= lichhen.soluong %>" required />
+
+          <label for="trangthai">Trạng Thái:</label>
+          <select name="trangthai" required>
+            <% if (trangThaiList && Array.isArray(trangThaiList)) { %>
+              <% trangThaiList.forEach(status => { %>
+                <option value="<%= status %>" <%= lichhen.trangthai === status ? 'selected' : '' %>><%= status %></option>
+              <% }); %>
+            <% } else { %>
+              <option disabled>No status available</option>
+            <% } %>            
+          </select>
+
+          <!-- Ghi Chú -->
+          <label for="ghichu">Ghi Chú:</label>
+          <textarea name="ghichu"><%= lichhen.ghichu %></textarea>
+        
+          <button type="submit">Cập Nhật</button>
+        </form>        
+        <a href="/admin/lichhen">Quay lại danh sách Lịch Hẹn</a>
+      </div>
+    </div>
+  </body>
+</html>

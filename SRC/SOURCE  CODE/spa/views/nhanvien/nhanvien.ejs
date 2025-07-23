@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      http-equiv="Cache-Control"
+      content="no-cache, no-store, must-revalidate"
+    />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <title>Dashboard Nhân Viên - Tiệm Nail Diamond</title>
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #fffaf0;
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+      .navbar {
+        background-color: #d8bea2 !important;
+      }
+      .navbar .nav-link,
+      .navbar .navbar-brand {
+        color: #000 !important;
+      }
+      .navbar .nav-link:hover {
+        color: #fff !important;
+      }
+      .navbar-logo {
+        border-radius: 50px;
+        max-height: 80px;
+      }
+      .main-content {
+        width: 800px;
+        margin: 40px auto;
+        padding: 20px;
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      .table th,
+      .table td {
+        vertical-align: middle;
+      }
+      .table img {
+        max-width: 100px;
+        border-radius: 5px;
+      }
+      .alert {
+        margin-bottom: 20px;
+      }
+      .footer {
+        background: #d8bea2;
+        color: #000;
+        padding: 20px 0;
+        margin-top: auto;
+      }
+      .footer-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+      }
+      .footer-grid > div {
+        flex: 1 1 300px;
+        padding: 15px;
+      }
+      .footer-grid h2 {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 10px;
+        text-align: left;
+      }
+      .footer-grid h3 {
+        font-size: 20px;
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+      .footer-grid p {
+        font-size: 0.9em;
+        margin-bottom: 5px;
+      }
+      .footer-grid a {
+        color: #000;
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+      .footer-grid a:hover {
+        color: #fff;
+      }
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 15px;
+      }
+      .btn-primary {
+        background-color: #d8bea2;
+        border-color: #d8bea2;
+      }
+      .btn-primary:hover {
+        background-color: #c49a82;
+        border-color: #c49a82;
+      }
+      .btn-secondary {
+        background-color: #6c757d;
+        border-color: #6c757d;
+      }
+      .btn-secondary:hover {
+        background-color: #5a6268;
+        border-color: #5a6268;
+      }
+      a {
+        color: #000;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      .pagination .page-link {
+        color: #000;
+        background-color: #fff;
+        border-color: #d8bea2;
+      }
+      .pagination .page-link:hover {
+        background-color: #c49a82;
+        border-color: #c49a82;
+        color: #fff;
+      }
+      .pagination .page-item.active .page-link {
+        background-color: #d8bea2;
+        border-color: #d8bea2;
+        color: #fff;
+      }
+      .pagination .page-item.disabled .page-link {
+        color: #6c757d;
+        background-color: #fff;
+        border-color: #d8bea2;
+      }
+      .calendar-header h2 {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+      .calendar-nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+      }
+      .calendar-nav button {
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+      }
+      .calendar-week {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        text-align: center;
+        font-weight: bold;
+        margin-bottom: 5px;
+      }
+      .calendar-days {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 2px;
+      }
+      .calendar-days div {
+        padding: 10px;
+        text-align: center;
+        cursor: pointer;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+      }
+      .calendar-days div:hover {
+        background-color: #f0f0f0;
+      }
+      .calendar-days .selected {
+        background-color: #d8bea2;
+        color: white;
+      }
+      .calendar-days .disabled {
+        color: #ccc;
+        cursor: not-allowed;
+      }
+      .calendar-days .leave-requested {
+        background-color: #ffcccb;
+        color: black;
+      }
+      .calendar-days .leave-approved {
+        background-color: #90ee90;
+        color: black;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Menu -->
+    <nav class="navbar navbar-expand-lg navbar-light">
+      <div class="container">
+        <a class="navbar-brand" href="/nhanvien">
+          <img
+            src="/Uploads/logo.png"
+            alt="Tiệm Nail Diamond"
+            class="navbar-logo"
+            style="max-height: 80px"
+          />
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <% if (user) { %>
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="navbarDropdown"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <%= user.HoTenNV || 'Tài khoản' %>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="#editProfile"
+                    data-bs-toggle="modal"
+                    data-bs-target="#editProfileModal"
+                    >Sửa thông tin</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="#requestLeave"
+                    data-bs-toggle="modal"
+                    data-bs-target="#requestLeaveModal"
+                    >Xin nghỉ</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="#stats"
+                    data-bs-toggle="modal"
+                    data-bs-target="#statsModal"
+                    >Thống kê</a
+                  >
+                </li>
+                <li><a class="dropdown-item" href="/dangxuat">Đăng xuất</a></li>
+              </ul>
+            </li>
+            <% } %>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Nội dung chính -->
+    <div class="main-content">
+      <h2 class="text-center mb-4">Danh Sách Lịch Hẹn Của Nhân Viên</h2>
+      <!-- Hiển thị thông báo -->
+      <% if (message && message.text) { %>
+      <div
+        class="alert alert-<%= message.type %> alert-dismissible fade show"
+        role="alert"
+      >
+        <%= message.text %>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="alert"
+          aria-label="Close"
+        ></button>
+      </div>
+      <% } %>
+
+      <!-- Thông tin nhân viên -->
+      <div class="mb-4">
+        <h4>Thông tin nhân viên</h4>
+        <p><strong>Họ tên:</strong> <%= user.HoTenNV %></p>
+        <p><strong>Email:</strong> <%= user.EmailNV %></p>
+        <p><strong>Số điện thoại:</strong> <%= user.SoDienThoaiNV %></p>
+      </div>
+
+      <!-- Danh sách lịch hẹn -->
+      <h4>Lịch hẹn phụ trách</h4>
+      <!-- Debug dữ liệu -->
+      <pre style="display: none">
+<%= JSON.stringify(appointments, null, 2) %>
+      </pre>
+      <% if (appointments && appointments.length > 0) { %>
+      <div class="table-responsive">
+        <table class="table table-bordered table-hover" id="appointmentsTable">
+          <thead class="table-light">
+            <tr>
+              <th>Ngày Hẹn</th>
+              <th>Giờ Hẹn</th>
+              <th>Khách Hàng</th>
+              <th>Dịch Vụ</th>
+              <th>Trạng Thái</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% appointments.forEach(appointment => { %>
+            <tr class="appointment-row">
+              <td>
+                <%= new Date(appointment.NgayHen).toLocaleDateString('vi-VN') %>
+              </td>
+              <td>
+                <% if (appointment.GioHen) { %> <%= new
+                Date(appointment.GioHen).toISOString().slice(11, 16) %> <% }
+                else { %> Không xác định <% } %>
+              </td>
+              <td><%= appointment.HoTenKH || 'Không xác định' %></td>
+              <td><%= appointment.TenSP || 'Không xác định' %></td>
+              <td><%= appointment.TrangThaiLH %></td>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+      <!-- Phân trang -->
+      <nav aria-label="Page navigation" class="mt-4">
+        <ul class="pagination justify-content-center" id="pagination"></ul>
+      </nav>
+      <% } else { %>
+      <p class="text-center text-muted">Không có lịch hẹn nào.</p>
+      <% } %>
+    </div>
+
+    <!-- Modal Sửa thông tin nhân viên -->
+    <div
+      class="modal fade"
+      id="editProfileModal"
+      tabindex="-1"
+      aria-labelledby="editProfileModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="editProfileModalLabel">
+              Sửa thông tin nhân viên
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form
+              id="editProfileForm"
+              action="/nhanvien/edit-profile"
+              method="POST"
+            >
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+              <div class="mb-3">
+                <label for="hoTenNV" class="form-label">Họ tên</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="hoTenNV"
+                  name="hoTenNV"
+                  value="<%= user.HoTenNV %>"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="soDienThoaiNV" class="form-label"
+                  >Số điện thoại</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="soDienThoaiNV"
+                  name="soDienThoaiNV"
+                  value="<%= user.SoDienThoaiNV %>"
+                  required
+                />
+              </div>
+              <button type="submit" class="btn btn-primary">
+                Lưu thay đổi
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Thống kê -->
+    <div
+      class="modal fade"
+      id="statsModal"
+      tabindex="-1"
+      aria-labelledby="statsModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="statsModalLabel">
+              Thống kê tháng <%= new Date().toLocaleString('vi-VN', { month:
+              'long', year: 'numeric' }) %>
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <p><strong>Số ngày làm việc:</strong> <%= stats.workingDays %></p>
+            <p><strong>Số ngày nghỉ:</strong> <%= stats.leaveDays %></p>
+            <p>
+              <strong>Số đơn hàng hoàn thành:</strong> <%=
+              stats.completedAppointments %>
+            </p>
+            <p>
+              <strong>Số đơn hàng bị hủy:</strong> <%=
+              stats.cancelledAppointments %>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Xin nghỉ -->
+    <div
+      class="modal fade"
+      id="requestLeaveModal"
+      tabindex="-1"
+      aria-labelledby="requestLeaveModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="requestLeaveModalLabel">
+              Đăng ký xin nghỉ
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div id="calendar-container" class="container">
+              <div class="calendar-header">
+                <h2>Vui lòng chọn ngày nghỉ</h2>
+              </div>
+              <div class="calendar-nav">
+                <button id="prevMonth" disabled>←</button>
+                <span id="monthYear"></span>
+                <button id="nextMonth">→</button>
+              </div>
+              <div class="calendar-week">
+                <div>Hai</div>
+                <div>Ba</div>
+                <div>Tư</div>
+                <div>Năm</div>
+                <div>Sáu</div>
+                <div>Bảy</div>
+                <div>CN</div>
+              </div>
+              <div class="calendar-days" id="calendarDays"></div>
+            </div>
+            <form
+              id="requestLeaveForm"
+              action="/nhanvien/request-leave"
+              method="POST"
+            >
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+              <input type="hidden" id="leaveDate" name="leaveDate" required />
+              <div class="mb-3">
+                <label for="reason" class="form-label">Lý do xin nghỉ</label>
+                <textarea
+                  class="form-control"
+                  id="reason"
+                  name="reason"
+                  rows="4"
+                  required
+                ></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary">Gửi yêu cầu</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div>
+            <h2>Tiệm nail Diamond</h2>
+            <h3>Địa chỉ</h3>
+            <p>Hẻm 300, Khóm 1, Phường 8, Thành phố Trà Vinh, tỉnh Trà Vinh</p>
+            <h3>Liên hệ</h3>
+            <p>Điện thoại: <a href="tel:0784265668">0784265668</a></p>
+            <p>
+              Email:
+              <a href="mailto:npb.duy.2002@gmail.com">npb.duy.2002@gmail.com</a>
+            </p>
+          </div>
+          <div>
+            <h3>Bản đồ</h3>
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d245.63861717762805!2d106.31644629814373!3d9.915804120820384!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1zaOG6u20gMzAwIEtow7NtIDEgcGjGsOG7nW5nIDggVGjDoG5oIHBo4buRIFRyw6AgVmluaA!5e0!3m2!1svi!2s!4v1744661746153!5m2!1svi!2s"
+              width="100%"
+              height="200"
+              style="border: 0; border-radius: 10px"
+              allowfullscreen=""
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+            ></iframe>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Phân trang lịch hẹn
+        const rowsPerPage = 10;
+        const rows = document.querySelectorAll(
+          "#appointmentsTable .appointment-row"
+        );
+        const totalRows = rows.length;
+        const totalPages = Math.ceil(totalRows / rowsPerPage);
+        let currentPage = 1;
+
+        function showPage(page) {
+          rows.forEach((row, index) => {
+            row.style.display =
+              index >= (page - 1) * rowsPerPage && index < page * rowsPerPage
+                ? ""
+                : "none";
+          });
+
+          const pagination = document.getElementById("pagination");
+          pagination.innerHTML = "";
+
+          const prevLi = document.createElement("li");
+          prevLi.className =
+            "page-item" + (currentPage === 1 ? " disabled" : "");
+          prevLi.innerHTML = `<a class="page-link" href="#" onclick="changePage(${
+            currentPage - 1
+          })"><<</a>`;
+          pagination.appendChild(prevLi);
+
+          for (let i = 1; i <= totalPages; i++) {
+            const li = document.createElement("li");
+            li.className = "page-item" + (i === currentPage ? " active" : "");
+            li.innerHTML = `<a class="page-link" href="#" onclick="changePage(${i})">${i}</a>`;
+            pagination.appendChild(li);
+          }
+
+          const nextLi = document.createElement("li");
+          nextLi.className =
+            "page-item" + (currentPage === totalPages ? " disabled" : "");
+          nextLi.innerHTML = `<a class="page-link" href="#" onclick="changePage(${
+            currentPage + 1
+          })">>></a>`;
+          pagination.appendChild(nextLi);
+        }
+
+        window.changePage = function (page) {
+          if (page >= 1 && page <= totalPages) {
+            currentPage = page;
+            showPage(page);
+          }
+        };
+
+        if (totalRows > 0) {
+          showPage(currentPage);
+        }
+
+        // Lịch xin nghỉ
+        let currentMonth = new Date().getMonth();
+        let currentYear = new Date().getFullYear();
+        let selectedDate = null;
+        const monthNames = [
+          "01", "02", "03", "04", "05", "06",
+          "07", "08", "09", "10", "11", "12"
+        ];
+        const leaveDates = <%- JSON.stringify(leaveDates) %>;
+
+        function renderCalendar() {
+          const today = new Date();
+          today.setHours(0, 0, 0, 0);
+          const minSelectableDate = new Date(today);
+          minSelectableDate.setDate(today.getDate() + 5);
+
+          const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+          const lastDate = new Date(currentYear, currentMonth + 1, 0).getDate();
+          const prevLastDate = new Date(currentYear, currentMonth, 0).getDate();
+
+          document.getElementById(
+            "monthYear"
+          ).textContent = `Tháng ${monthNames[currentMonth]}-${currentYear}`;
+          document.getElementById("prevMonth").disabled =
+            currentMonth === today.getMonth() && currentYear === today.getFullYear();
+          document.getElementById("nextMonth").disabled = false;
+
+          let days = "";
+          const adjustedFirstDay = firstDay === 0 ? 6 : firstDay - 1;
+
+          for (let i = adjustedFirstDay; i > 0; i--) {
+            days += `<div class="disabled">${prevLastDate - i + 1}</div>`;
+          }
+
+          for (let i = 1; i <= lastDate; i++) {
+            const dateStr = `${currentYear}-${String(currentMonth + 1).padStart(
+              2,
+              "0"
+            )}-${String(i).padStart(2, "0")}`;
+            const dateObj = new Date(dateStr);
+            const isPast = dateObj < minSelectableDate;
+            const leaveStatus = leaveDates.find(ld => ld.NgayNghi === dateStr)?.TrangThaiNghi;
+            const isSelected = selectedDate === dateStr ? "selected" : "";
+            let className = isPast ? "disabled" : "";
+            if (leaveStatus === "Chờ duyệt") {
+              className += " leave-requested";
+            } else if (leaveStatus === "Đã duyệt") {
+              className += " leave-approved";
+            }
+            days += `<div class="${isSelected} ${className}" data-date="${dateStr}">${i}</div>`;
+          }
+
+          document.getElementById("calendarDays").innerHTML = days;
+
+          document
+            .querySelectorAll(".calendar-days div:not(.disabled)")
+            .forEach((day) => {
+              day.addEventListener("click", () => {
+                document
+                  .querySelectorAll(".calendar-days div")
+                  .forEach((d) => d.classList.remove("selected"));
+                day.classList.add("selected");
+                selectedDate = day.dataset.date;
+                document.getElementById("leaveDate").value = selectedDate;
+              });
+            });
+        }
+
+        document.getElementById("prevMonth").addEventListener("click", () => {
+          if (currentMonth === 0) {
+            currentMonth = 11;
+            currentYear--;
+          } else {
+            currentMonth--;
+          }
+          renderCalendar();
+        });
+
+        document.getElementById("nextMonth").addEventListener("click", () => {
+          if (currentMonth === 11) {
+            currentMonth = 0;
+            currentYear++;
+          } else {
+            currentMonth++;
+          }
+          renderCalendar();
+        });
+
+        renderCalendar();
+      });
+    </script>
+    <!-- Thêm mã Crisp -->
+    <script type="text/javascript">
+      window.CRISP_WEBSITE_ID = "1943f314-1b1a-49aa-9069-02eb9fe4db8a";
+      (function () {
+        var d = document;
+        var s = d.createElement("script");
+        s.src = "https://client.crisp.chat/l.js";
+        s.async = 1;
+        d.getElementsByTagName("head")[0].appendChild(s);
+      })();
+    </script>
+  </body>
+</html>

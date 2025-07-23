@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quản Trị</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="sidebar">
+        <h2>Chọn mục để quản lý:</h2>
+        <ul>
+          <li><a href="/admin/taikhoan">Tài Khoản</a></li>
+          <li><a href="/admin/khachhang">Khách Hàng</a></li>
+          <li><a href="/admin/nhanvien">Nhân Viên</a></li>
+          <li><a href="/admin/loaisanpham">Loại Nhóm Sản Phẩm</a></li>
+          <li><a href="/admin/sanpham">Sản Phẩm</a></li>
+          <li><a href="/admin/lichhen">Lịch Hẹn</a></li>
+          <li><a href="/admin/hoadon">Hóa Đơn</a></li>
+          <li><a href="/admin/danhgia">Đánh Giá</a></li>
+        </ul>
+      </div>
+      <div class="content">
+        <!-- nội dung -->
+        <h1>Danh Sách Sản Phẩm</h1>
+        <table>
+          <thead>
+            <tr>
+              <th>Tên Sản Phẩm</th>
+              <th>Giá</th>
+              <th>Phân Loại</th>
+              <th>Loại Sản Phẩm</th>
+              <th>Hình Ảnh</th>
+              <th>Bài Viết</th>
+              <th>Trạng Thái</th>
+              <th>Hành Động</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% sanpham.forEach(sanpham => { %>
+            <tr>
+              <td><%= sanpham.tensanpham %></td>
+              <td><%= sanpham.gia.toLocaleString('vi-VN') %></td>
+              <!-- Định dạng giá -->
+              <td><%= sanpham.phanloai %></td>
+              <!-- Phân loại sản phẩm -->
+              <td><%= sanpham.tenloainhomsanpham %></td>
+              <td>
+                <img
+                  src="<%= sanpham.hinhanh %>"
+                  alt="<%= sanpham.tensanpham %>"
+                  style="width: 100px; height: auto"
+                />
+              </td>
+              <td><%= sanpham.baiviet %></td>
+              <!-- Bài viết mô tả -->
+              <td><%= sanpham.trangthai %></td>
+              <!-- Trạng thái sản phẩm -->
+              <td>
+                <form
+                  action="/admin/sanpham/suasanpham/<%= sanpham.sanpham_id %>"
+                  method="GET"
+                  style="display: inline"
+                >
+                  <button type="submit">Sửa</button>
+                </form>
+                <form
+                  action="/admin/sanpham/xoa/<%= sanpham.sanpham_id %>"
+                  method="POST"
+                  style="display: inline"
+                >
+                  <button type="submit">Xóa</button>
+                </form>
+              </td>
+            </tr>
+            <% }); %>
+          </tbody>
+        </table>
+        <form action="/admin/sanpham/themsanpham" method="GET">
+          <button type="submit">Thêm Sản Phẩm</button>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

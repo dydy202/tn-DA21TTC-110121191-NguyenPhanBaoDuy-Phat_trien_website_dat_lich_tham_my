@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quản Trị</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="sidebar">
+        <h2>Chọn mục để quản lý:</h2>
+        <ul>
+          <li><a href="/admin/taikhoan">Tài Khoản</a></li>
+          <li><a href="/admin/khachhang">Khách Hàng</a></li>
+          <li><a href="/admin/nhanvien">Nhân Viên</a></li>
+          <li><a href="/admin/loaisanpham">Loại Nhóm Sản Phẩm</a></li>
+          <li><a href="/admin/sanpham">Sản Phẩm</a></li>
+          <li><a href="/admin/lichhen">Lịch Hẹn</a></li>
+          <li><a href="/admin/hoadon">Hóa Đơn</a></li>
+          <li><a href="/admin/danhgia">Đánh Giá</a></li>
+        </ul>
+      </div>
+      <div class="content">
+        <!-- nội dung -->
+        <h1>Danh Sách Hóa Đơn</h1>
+        <table>
+          <thead>
+            <tr>
+              <th>Khách Hàng ID</th>
+              <th>Nhân Viên ID</th>
+              <th>Lịch Hẹn ID</th>
+              <th>Tổng Tiền</th>
+              <th>Phương Thức</th>
+              <th>Trạng Thái</th>
+              <th>Ngày Lập</th>
+              <th>Hành Động</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% hoadon.forEach(hoadon => { %>
+            <tr>
+              <td><%= hoadon.khachhang_id %></td>
+              <td><%= hoadon.nhanvien_id %></td>
+              <td><%= hoadon.lichhen_id %></td>
+              <td><%= hoadon.tongtien.toLocaleString('vi-VN') %></td>
+              <td><%= hoadon.phuongthuc %></td>
+              <td><%= hoadon.trangthai %></td>
+              <td>
+                <%= new Date(hoadon.ngaylap).toLocaleDateString('vi-VN') %>
+              </td>
+              <td>
+                <form
+                  action="/admin/hoadon/suahoadon/<%= hoadon.hoadon_id %>"
+                  method="GET"
+                  style="display: inline"
+                >
+                  <button type="submit">Sửa</button>
+                </form>
+
+                <form
+                  action="/admin/hoadon/xoa/<%= hoadon.hoadon_id %>"
+                  method="POST"
+                  style="display: inline"
+                >
+                  <button type="submit">Xóa</button>
+                </form>
+
+                <form
+                  action="/admin/hoadon/chitiethoadon/<%= hoadon.hoadon_id %>"
+                  method="GET"
+                  style="display: inline"
+                >
+                  <button type="submit">Chi tiết hóa đơn</button>
+                </form>
+              </td>
+            </tr>
+            <% }); %>
+          </tbody>
+        </table>
+        <form action="/admin/hoadon/themhoadon" method="GET">
+          <button type="submit">Thêm Hóa Đơn</button>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

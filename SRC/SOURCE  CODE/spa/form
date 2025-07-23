@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quản Trị</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <style>
+    body {
+      background-color: #fffaf0; /* Màu nền chính */
+    }
+    .footer {
+      background: #d8bea2;
+      color: #000;
+      padding: 20px 0;
+      margin-top: auto;
+    }
+    .footer-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .footer-grid > div {
+      flex: 1 1 300px;
+      padding: 15px;
+    }
+    .footer-grid h2 {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    .footer-grid h3 {
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    .footer-grid p {
+      font-size: 0.9em; /* Giảm kích thước chữ */
+      margin-bottom: 5px;
+    }
+    .footer-grid a {
+      color: #000;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    .footer-grid a:hover {
+      color: #fff;
+    }
+  </style>
+
+  <body>
+    <div class="container">
+      <div class="sidebar">
+        <h2>Chọn mục để quản lý:</h2>
+        <ul>
+          <li><a href="/admin/taikhoan">Tài Khoản</a></li>
+          <li><a href="/admin/khachhang">Khách Hàng</a></li>
+          <li><a href="/admin/nhanvien">Nhân Viên</a></li>
+          <li><a href="/admin/loaisanpham">Loại Nhóm Sản Phẩm</a></li>
+          <li><a href="/admin/sanpham">Sản Phẩm</a></li>
+          <li><a href="/admin/lichhen">Lịch Hẹn</a></li>
+          <li><a href="/admin/hoadon">Hóa Đơn</a></li>
+          <li><a href="/admin/chitiethoadon">Chi Tiết Hóa Đơn</a></li>
+          <li><a href="/admin/danhgia">Đánh Giá</a></li>
+        </ul>
+      </div>
+      <div class="content">
+        <!-- nội dung -->
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div>
+            <h2>Tiệm nail Diamond</h2>
+            <h3>Địa chỉ</h3>
+            <p>Hẻm 300, Khóm 1, Phường 8, Thành phố Trà Vinh, tỉnh Trà Vinh</p>
+            <h3>Liên hệ</h3>
+            <p>Điện thoại: 0784265668</p>
+            <p>Email: npb.duy.2002@gmail.com</p>
+          </div>
+          <div>
+            <h3>Bản đồ</h3>
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d245.63861717762805!2d106.31644629814373!3d9.915804120820384!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1zaOG6u20gMzAwIEtow7NtIDEgcGjGsOG7nW5nIDggVGjDoG5oIHBo4buRIFRyw6AgVmluaA!5e0!3m2!1svi!2s!4v1744661746153!5m2!1svi!2s"
+              width="100%"
+              height="200"
+              style="border: 0; border-radius: 10px"
+              allowfullscreen=""
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+            ></iframe>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Thêm mã Crisp -->
+    <script type="text/javascript">
+      window.CRISP_WEBSITE_ID = "1943f314-1b1a-49aa-9069-02eb9fe4db8a";
+      (function () {
+        var d = document;
+        var s = d.createElement("script");
+        s.src = "https://client.crisp.chat/l.js";
+        s.async = 1;
+        d.getElementsByTagName("head")[0].appendChild(s);
+      })();
+    </script>
+  </body>
+</html>

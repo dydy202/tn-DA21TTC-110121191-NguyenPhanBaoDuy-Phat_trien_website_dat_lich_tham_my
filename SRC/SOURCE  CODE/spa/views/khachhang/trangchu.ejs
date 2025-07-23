@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tiệm Nail Của Bạn</title>
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.rawgit.com/michalsnik/aos/2.3.1/dist/aos.css"
+    />
+    <script src="https://cdn.rawgit.com/michalsnik/aos/2.3.1/dist/aos.js"></script>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #fffaf0;
+      }
+      .banner {
+        background: url("banner.jpg") no-repeat center;
+        background-size: cover;
+        height: 500px;
+        color: rgb(0, 0, 0);
+        text-align: center;
+        padding-top: 200px;
+      }
+      .banner h1 {
+        font-size: 4em;
+      }
+      .service-section {
+        padding: 50px 0;
+        text-align: center;
+      }
+      .main-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 80%;
+        margin: 0 auto;
+        text-align: center;
+      }
+      .carousel-inner {
+        border-radius: 20px;
+        overflow: hidden;
+        /*width: 100%;*/ /* Đảm bảo carousel chiếm toàn bộ chiều rộng của container */
+      }
+      .carousel-item {
+        /* padding: 0;
+        margin: 0; */
+        transition: transform 0.6s ease-in-out;
+      }
+      .carousel-img {
+        width: 100%;
+        height: 315px; /* Giữ chiều cao cố định */
+        object-fit: cover; /* Đảm bảo ảnh hiển thị đầy đủ, không bị cắt */
+        border-radius: 20px; /* Bo góc ảnh */
+        display: block;
+      }
+      .slide,
+      .carousel,
+      .carousel-inner,
+      .carousel-item {
+        border-bottom: none !important;
+      }
+      .slide {
+        margin-bottom: 15px;
+      }
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 15px;
+      }
+      .instagram {
+        padding: 30px 0;
+        background-color: #fffaf0;
+        border-top: none;
+      }
+      .nailit {
+        background-color: #fffaf0;
+      }
+      #nailit {
+        padding: 30px 0;
+        background-color: #fffaf0;
+      }
+      .section-title {
+        margin-bottom: 20px;
+        font-size: 2.5em;
+        color: #333;
+      }
+      .section-title span {
+        color: #d8bea2;
+        font-weight: bold;
+      }
+      .button-c {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #d8bea2;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+      }
+      .button-c:hover {
+        background-color: #c49a82;
+      }
+      .service-item h3 {
+        font-size: 23px;
+      }
+      .service-item p {
+        font-size: 19px;
+      }
+      .footer {
+        padding: 15px 0; /* Giảm từ 20px xuống 15px nếu muốn */
+        background: #d8bea2;
+        color: #000000;
+        padding: 20px 0;
+        font-family: Arial, sans-serif;
+      }
+      .footer-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+      }
+      .footer-grid > div {
+        flex: 1 1 300px;
+        padding: 15px;
+      }
+      .footer-grid h3 {
+        font-size: 20px;
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+      .footer-grid a {
+        color: #000000;
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+      .footer-grid a:hover {
+        color: #ffffff;
+      }
+      .footer-grid p {
+        font-size: 1em; /* Giảm kích thước chữ xuống 90% so với mặc định */
+      }
+      h2 {
+        font-size: 2.5em;
+      }
+      h3 {
+        font-size: 1.5em;
+      }
+      p {
+        font-size: 1.2em;
+      }
+      .message-success,
+      .message-error {
+        transition: none;
+      }
+      .navbar {
+        background-color: #d8bea2 !important;
+      }
+      .section-subtitle {
+        font-size: 1.2em;
+        color: #d8bea2;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin-bottom: 10px;
+        text-align: center;
+      }
+      .section-subtitle2 {
+        font-size: 1.5em;
+        color: #333;
+        font-style: italic;
+        margin-bottom: 20px;
+        text-align: center;
+      }
+      .section-title {
+        margin-bottom: 40px;
+        font-size: 2.5em;
+        color: #333;
+        text-align: center;
+        line-height: 1.4;
+        position: relative;
+      }
+      .section-title::after {
+        content: "";
+        display: block;
+        width: 60px;
+        height: 3px;
+        background: #d8bea2;
+        margin: 10px auto;
+      }
+      .section-title span {
+        color: #d8bea2;
+        font-weight: bold;
+      }
+      .grid-inner {
+        display: flex;
+        gap: 30px;
+        align-items: flex-start;
+        flex-wrap: wrap;
+      }
+      .grid-image {
+        flex: 1 1 40%;
+        min-width: 300px;
+      }
+      .grid-image img {
+        width: 100%;
+        height: auto;
+        max-height: 500px;
+        border-radius: 10px;
+        object-fit: cover;
+      }
+      .grid-content {
+        flex: 1 1 55%;
+        min-width: 300px;
+      }
+      .grid-content p {
+        font-size: 1.1em;
+        color: #666;
+        line-height: 1.8;
+        margin-bottom: 20px;
+      }
+      .grid-url {
+        display: flex;
+        gap: 15px;
+        margin-top: 20px;
+      }
+      .button-a,
+      .button-b {
+        display: inline-block;
+        padding: 12px 25px;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s ease, transform 0.1s ease;
+        font-size: 1em;
+      }
+      .button-a {
+        background-color: #d8bea2;
+        color: white;
+      }
+      .button-a:hover {
+        background-color: #c49a82;
+        transform: translateY(-2px);
+      }
+      .button-b {
+        background-color: transparent;
+        border: 2px solid #d8bea2;
+        color: #d8bea2;
+      }
+      .button-b:hover {
+        background-color: #d8bea2;
+        color: white;
+        transform: translateY(-2px);
+      }
+      .button-b i {
+        margin-left: 5px;
+      }
+      .navbar-logo {
+        border-radius: 50px;
+      }
+      .col-md-4 {
+        min-height: 400px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+      .service-item {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+      }
+      .booking-button {
+        margin-top: auto;
+      }
+      /* Định dạng thông báo nổi */
+      .alert {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) translateY(-20px);
+        z-index: 1050;
+        min-width: 300px;
+        max-width: 400px;
+        padding: 15px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        opacity: 0;
+        transition: opacity 0.3s ease, transform 0.3s ease;
+      }
+      .alert.show {
+        opacity: 1;
+        transform: translate(-50%, -50%) translateY(0);
+      }
+      .alert.fade-out {
+        opacity: 0;
+        transform: translate(-50%, -50%) translateY(-20px);
+      }
+      .alert-success {
+        background-color: #d4edda;
+        border-color: #c3e6cb;
+        color: #155724;
+      }
+      .alert-danger {
+        background-color: #f8d7da;
+        border-color: #f5c6cb;
+        color: #721c24;
+      }
+      /* Tùy chỉnh kích thước khung chat Crisp */
+      #crisp-client {
+        transform: scale(0.8);
+        transform-origin: bottom right;
+      }
+      /* .crisp-client .crisp-chatbox {
+        max-width: 300px !important;
+        max-height: 400px !important;
+      }
+      .crisp-client .crisp-button {
+        width: 50px !important;
+        height: 50px !important;
+      } */
+      /* Ẩn khung ban đầu để tránh nhấp nháy */
+      .crisp-client .cc-main {
+        transform: scale(0.3); /* nhỏ hơn 1 là thu nhỏ, ví dụ 0.8 = 80% */
+        transform-origin: bottom right; /* giữ vị trí ở góc phải dưới */
+      }
+
+      @media (max-width: 767px) {
+        .grid-inner {
+          flex-direction: column;
+          gap: 20px;
+        }
+        .grid-image,
+        .grid-content {
+          flex: 1 1 100%;
+        }
+        .section-title {
+          font-size: 2em;
+        }
+        .section-subtitle {
+          font-size: 1em;
+        }
+        .section-subtitle2 {
+          font-size: 1.2em;
+        }
+        .grid-url {
+          flex-direction: column;
+          gap: 10px;
+        }
+        .button-a,
+        .button-b {
+          width: 100%;
+          text-align: center;
+        }
+      }
+      #home-services .row + .row {
+        margin-top: 1.5rem; /* Giảm khoảng cách giữa các hàng */
+      }
+      #home-services .service-item img {
+        border-radius: 15px; /* Bỏ góc bo tròn */
+        max-height: 200px;
+        object-fit: cover;
+        margin-bottom: 15px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Menu -->
+    <nav class="navbar navbar-expand-lg navbar-light">
+      <div class="container">
+        <a class="navbar-brand" href="/trangchu">
+          <img
+            src="/uploads/logo.png"
+            alt="Tiệm Nail Diamond"
+            class="navbar-logo"
+            style="max-height: 80px"
+          />
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="/trangchu">Trang chủ</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/gioithieu">Giới thiệu</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/dichvu">Dịch vụ</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/hocvien">Học viện</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/tintuc">Tin tức</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/album">Album</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/datlich?redirect=/datlich">Đặt lịch</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/lienhe">Liên hệ</a>
+            </li>
+            <% if (user) { %>
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="navbarDropdown"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <%= user.HoTenKH || 'Tài khoản' %>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li>
+                  <a class="dropdown-item" href="/taikhoan">Sửa thông tin</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="/lichsu-lichhen"
+                    >Lịch sử lịch hẹn</a
+                  >
+                </li>
+                <li><a class="dropdown-item" href="/dangxuat">Đăng xuất</a></li>
+              </ul>
+            </li>
+            <% } else { %>
+            <li class="nav-item">
+              <a class="nav-link" href="/dangnhap">Đăng nhập/Đăng ký</a>
+            </li>
+            <% } %>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <br />
+    <div class="main-content">
+      <% if (success && success.length > 0) { %>
+      <div class="alert alert-success" role="alert">
+        <%= Array.isArray(success) ? success.join(', ') : success %>
+      </div>
+      <% } %> <% if (error && error.length > 0) { %>
+      <div class="alert alert-danger" role="alert">
+        <%= Array.isArray(error) ? error.join(', ') : error %>
+      </div>
+      <% } %>
+      <!-- Slide -->
+      <section class="slide">
+        <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
+          <div class="carousel-inner" role="listbox">
+            <div class="carousel-item active">
+              <img
+                src="/uploads/slide.png"
+                alt="Slide 1"
+                class="d-block w-100 carousel-img"
+              />
+            </div>
+            <div class="carousel-item">
+              <img
+                src="/uploads/slide3.png"
+                alt="Slide 3"
+                class="d-block w-100 carousel-img"
+              />
+            </div>
+            <div class="carousel-item">
+              <img
+                src="/uploads/slide1.png"
+                alt="Slide 2"
+                class="d-block w-100 carousel-img"
+              />
+            </div>
+            <div class="carousel-item">
+              <img
+                src="/uploads/slide4.png"
+                alt="Slide 3"
+                class="d-block w-100 carousel-img"
+              />
+            </div>
+            <div class="carousel-item">
+              <img
+                src="/uploads/slide2.png"
+                alt="Slide 3"
+                class="d-block w-100 carousel-img"
+              />
+            </div>
+          </div>
+          <a
+            class="carousel-control-prev"
+            href="#myCarousel"
+            role="button"
+            data-bs-slide="prev"
+          >
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </a>
+          <a
+            class="carousel-control-next"
+            href="#myCarousel"
+            role="button"
+            data-bs-slide="next"
+          >
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </a>
+        </div>
+      </section>
+
+      <!-- Banner -->
+      <section class="instagram">
+        <div class="container text-center">
+          <h2
+            class="section-title aos-init"
+            data-aos="fade-up"
+            data-aos-offset="200"
+            data-aos-duration="1000"
+          >
+            Chào mừng đến với <span>Tiệm Nail Diamond</span>
+          </h2>
+          <div class="booking-button">
+            <a
+              href="/datlich?redirect=/datlich"
+              class="button-c"
+              target="_blank"
+              >Đặt lịch</a
+            >
+          </div>
+        </div>
+        <script>
+          AOS.init();
+        </script>
+      </section>
+
+      <section id="nailit" class="nailit">
+        <div class="container">
+          <div
+            class="section-subtitle2 center aos-init aos-animate"
+            data-aos="fade-up"
+          >
+            "You Love It. We Nail It!"
+          </div>
+          <h2 class="section-title center">
+            VỚI NAIL ROOM<br />“AI CŨNG CÓ THỂ TRỞ NÊN ĐẸP HƠN”
+          </h2>
+          <div class="grid-inner">
+            <div class="grid-image aos-init aos-animate" data-aos="fade-up">
+              <img
+                src="https://nailroom.vn/wp-content/uploads/2019/09/Untitled-5.jpg"
+                alt="Hình ảnh Nail Room"
+                class="img-fluid"
+              />
+            </div>
+            <div class="grid-content aos-init aos-animate" data-aos="fade-up">
+              <p>
+                Xuất phát là một hệ thống Nail uy tín, Nail Room luôn đặt trọn
+                vẹn trái tim & tâm huyết vào việc làm đẹp cho các nàng.
+              </p>
+              <p>
+                Bởi thế, slogan của Nail Room là “Ai cũng có thể trở nên đẹp
+                hơn”. Đến với Nail Room và ra về như những phụ nữ xinh đẹp hơn,
+                hạnh phúc hơn là điều chúng mình hướng tới.
+              </p>
+              <p>
+                <span style="color: #b7752b"
+                  >Hãy ghé chơi với chúng mình để cảm nhận niềm vui từ việc yêu
+                  chiều bản thân nhé!</span
+                >
+              </p>
+              <div class="grid-url">
+                <a href="/gioithieu" class="button-a">Giới thiệu</a>
+                <a href="/lienhe" class="button-b"
+                  >Hệ thống Nailroom <i class="fas fa-chevron-right"></i
+                ></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Dịch vụ -->
+      <section id="home-services">
+        <div class="container">
+          <h2 class="section-title aos-init aos-animate" data-aos="fade-up">
+            DỊCH VỤ <span>NAILROOM</span>
+          </h2>
+          <!-- Hàng 1: Mi, Nail, Lông mày -->
+          <div class="row">
+            <div class="col-12 col-md-4">
+              <div class="service-item">
+                <img
+                  src="/uploads/dichvu/mi.png"
+                  class="img-fluid"
+                  alt="Sơn gel"
+                /><br />
+                <h3>Mi</h3>
+                <p>
+                  Ở NAIL ROOM hiện có 2 dịch vụ chính về mi đó là nối mi và uốn
+                  mi.
+                </p>
+                <div class="booking-button">
+                  <a
+                    href="/datlich?redirect=/datlich"
+                    class="button-c"
+                    target="_blank"
+                    >Đặt lịch</a
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-md-4">
+              <div class="service-item">
+                <img
+                  src="/uploads/dichvu/nail.png"
+                  class="img-fluid"
+                  alt="Nail art"
+                /><br />
+                <h3>Nail</h3>
+                <p>
+                  Là dịch vụ được yêu thích nhất tại NAIL ROOM, với những mẫu
+                  nail hot trend.
+                </p>
+                <div class="booking-button">
+                  <a
+                    href="/datlich?redirect=/datlich"
+                    class="button-c"
+                    target="_blank"
+                    >Đặt lịch</a
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-md-4">
+              <div class="service-item">
+                <img
+                  src="/uploads/dichvu/chan_may.png"
+                  class="img-fluid"
+                  alt="Spa móng"
+                /><br />
+                <h3>Lông mày</h3>
+                <p>
+                  NAIL ROOM đang có các dịch vụ về lông mày như: phun thêu, điêu
+                  khắc, waxing…
+                </p>
+                <div class="booking-button">
+                  <a
+                    href="/datlich?redirect=/datlich"
+                    class="button-c"
+                    target="_blank"
+                    >Đặt lịch</a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Hàng 2: Xăm môi, Gội đầu dưỡng sinh, Chăm sóc da -->
+          <div class="row">
+            <div class="col-12 col-md-4">
+              <div class="service-item">
+                <img
+                  src="/uploads/dichvu/xam_moi.jpg"
+                  class="img-fluid"
+                  alt="Xăm môi"
+                /><br />
+                <h3>Xăm môi</h3>
+                <p>
+                  Dịch vụ xăm môi tại NAIL ROOM mang lại đôi môi căng mọng, màu
+                  sắc tự nhiên, phù hợp với mọi phong cách.
+                </p>
+                <div class="booking-button">
+                  <a
+                    href="/datlich?redirect=/datlich"
+                    class="button-c"
+                    target="_blank"
+                    >Đặt lịch</a
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-md-4">
+              <div class="service-item">
+                <img
+                  src="/uploads/dichvu/goi_dau_duong_sinh.png"
+                  class="img-fluid"
+                  alt="Gội đầu dưỡng sinh"
+                /><br />
+                <h3>Gội đầu dưỡng sinh</h3>
+                <p>
+                  Trải nghiệm gội đầu dưỡng sinh tại NAIL ROOM, giúp thư giãn và
+                  chăm sóc tóc, da đầu khỏe mạnh.
+                </p>
+                <div class="booking-button">
+                  <a
+                    href="/datlich?redirect=/datlich"
+                    class="button-c"
+                    target="_blank"
+                    >Đặt lịch</a
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-md-4">
+              <div class="service-item">
+                <img
+                  src="/uploads/dichvu/cham_soc_da.jpg"
+                  class="img-fluid"
+                  alt="Chăm sóc da"
+                /><br />
+                <h3>Chăm sóc da</h3>
+                <p>
+                  Dịch vụ chăm sóc da tại NAIL ROOM giúp làn da sáng mịn, khỏe
+                  mạnh với các liệu pháp chuyên sâu.
+                </p>
+                <div class="booking-button">
+                  <a
+                    href="/datlich?redirect=/datlich"
+                    class="button-c"
+                    target="_blank"
+                    >Đặt lịch</a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+    <br />
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div>
+            <h2>Tiệm nail Diamond</h2>
+            <h3>Địa chỉ</h3>
+            <p>Hẻm 300, Khóm 1, Phường 8, Thành phố Trà Vinh, tỉnh Trà Vinh</p>
+            <h3>Liên hệ</h3>
+            <p>Điện thoại: 0784265668</p>
+            <p>Email: npb.duy.2002@gmail.com</p>
+          </div>
+          <div>
+            <h3>Bản đồ</h3>
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d245.63861717762805!2d106.31644629814373!3d9.915804120820384!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1zaOG6u20gMzAwIEtow7NtIDEgcGjGsOG7nW5nIDggVGjDoG5oIHBo4buRIFRyw6AgVmluaA!5e0!3m2!1svi!2s!4v1744661746153!5m2!1svi!2s"
+              width="100%"
+              height="200"
+              style="border: 0; border-radius: 10px"
+              allowfullscreen=""
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+            ></iframe>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      // Tự động ẩn thông báo sau 3 giây với hiệu ứng mờ dần
+      document.addEventListener("DOMContentLoaded", () => {
+        const messages = document.querySelectorAll(
+          ".alert-success, .alert-danger"
+        );
+        messages.forEach((message) => {
+          message.classList.add("show");
+          setTimeout(() => {
+            message.classList.remove("show");
+            message.classList.add("fade-out");
+            setTimeout(() => {
+              message.style.display = "none";
+            }, 300);
+          }, 3000);
+        });
+      });
+    </script>
+
+    <script type="text/javascript">
+      window.$crisp = [];
+      window.CRISP_WEBSITE_ID = "1943f314-1b1a-49aa-9069-02eb9fe4db8a";
+      (function () {
+        var d = document;
+        var s = d.createElement("script");
+        s.src = "https://client.crisp.chat/l.js";
+        s.async = 1;
+        d.getElementsByTagName("head")[0].appendChild(s);
+      })();
+    </script>
+    <!-- <script type="application/javascript">
+      window.tiledeskSettings = {
+        projectid: "68569dbc73c854001324e13c",
+      };
+      (function (d, s, id) {
+        var w = window;
+        var d = document;
+        var i = function () {
+          i.c(arguments);
+        };
+        i.q = [];
+        i.c = function (args) {
+          i.q.push(args);
+        };
+        w.Tiledesk = i;
+        var js,
+          fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s);
+        js.id = id;
+        js.async = true;
+        js.src = "https://widget.tiledesk.com/v6/launch.js";
+        fjs.parentNode.insertBefore(js, fjs);
+      })(document, "script", "tiledesk-jssdk");
+    </script> -->
+  </body>
+</html>

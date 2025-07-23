@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      http-equiv="Cache-Control"
+      content="no-cache, no-store, must-revalidate"
+    />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <title>Đặt Lịch - Tiệm Nail</title>
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #fffaf0;
+      }
+      .navbar {
+        background-color: #d8bea2 !important;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      .main-content {
+        max-width: 800px;
+        margin: 40px auto;
+        padding: 20px;
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      .calendar-header h2 {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+      .calendar-nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+      }
+      .calendar-nav button {
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+      }
+      .calendar-week {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        text-align: center;
+        font-weight: bold;
+        margin-bottom: 5px;
+      }
+      .calendar-days {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 2px;
+      }
+      .calendar-days div {
+        padding: 10px;
+        text-align: center;
+        cursor: pointer;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+      }
+      .calendar-days div:hover {
+        background-color: #f0f0f0;
+      }
+      .calendar-days .selected {
+        background-color: #d8bea2;
+        color: white;
+      }
+      .calendar-days .disabled {
+        color: #ccc;
+        cursor: not-allowed;
+      }
+      .calendar-action {
+        margin-top: 10px;
+        text-align: right;
+      }
+      .available-times {
+        margin-top: 20px;
+      }
+      .available-times button {
+        margin: 5px;
+        padding: 5px 10px;
+        background-color: #ffffff; /* Màu nền cho nút chưa chọn */
+        border: 1px solid #d8bea2; /* Viền để đồng bộ màu */
+        color: #d8bea2; /* Màu chữ cho nút chưa chọn */
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
+      .available-times button:hover {
+        background-color: #d8bea2 !important; /* Màu nền khi hover */
+        border: 1px solid #d8bea2; /* Viền để đồng bộ màu */
+        color: #ffffff !important; /* Màu chữ khi hover */
+      }
+      .available-times button.selected {
+        background-color: #d8bea2 !important; /* Màu nền khi chọn */
+        color: #ffffff !important; /* Màu chữ khi chọn */
+      }
+      .message-error {
+        color: red;
+        font-weight: bold;
+        text-align: center;
+        padding: 10px;
+        background-color: #ffe6e6;
+        border-radius: 5px;
+      }
+      .message-success {
+        color: green;
+        font-weight: bold;
+        text-align: center;
+        padding: 10px;
+        background-color: #e6ffe6;
+        border-radius: 5px;
+      }
+      .no-data {
+        color: #888;
+        font-style: italic;
+      }
+      .message-success, .message-error {
+        transition: opacity 0.5s ease-out;
+      }
+      .fade-out {
+        opacity: 0;
+      }
+      .footer {
+      background: #d8bea2;
+      color: #000;
+      padding: 20px 0;
+      margin-top: auto;
+    }
+    .footer-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .footer-grid > div {
+      flex: 1 1 300px;
+      padding: 15px;
+    }
+    .footer-grid h2 {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    .footer-grid h3 {
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    .footer-grid p {
+      font-size: 0.9em; /* Giảm kích thước chữ */
+      margin-bottom: 5px;
+    }
+    .footer-grid a {
+      color: #000;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    .footer-grid a:hover {
+      color: #fff;
+    }
+      .navbar-logo {
+        border-radius: 50px;
+      }
+      /* Modal custom styles */
+      .modal-content {
+        border-radius: 10px;
+        background-color: #fff;
+      }
+      .modal-header {
+        background-color: #d8bea2;
+        color: #000000;
+        border-bottom: none;
+      }
+      .modal-body {
+        padding: 20px;
+      }.service-price {
+        color: #d8bea2; /* Màu giá tiền đồng bộ với giao diện */
+        font-weight: bold;
+      }#paymentQR {
+        display: none; /* Ẩn mặc định */
+        margin-top: 20px;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Menu -->
+    <nav class="navbar navbar-expand-lg navbar-light">
+      <div class="container">
+        <a class="navbar-brand" href="/trangchu">
+          <img
+            src="/uploads/logo.png"
+            alt="Tiệm Nail Diamond"
+            class="navbar-logo"
+            style="max-height: 80px"
+          />
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="/trangchu">Trang chủ</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/gioithieu">Giới thiệu</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/dichvu">Dịch vụ</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/hocvien">Học viện</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/tintuc">Tin tức</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/album">Album</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/datlich?redirect=/datlich">Đặt lịch</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/lienhe">Liên hệ</a>
+            </li>
+            <% if (user) { %>
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="navbarDropdown"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <%= user.HoTenKH || 'Tài khoản' %>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li>
+                  <a class="dropdown-item" href="/taikhoan">Sửa thông tin</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="/lichsu-lichhen"
+                    >Lịch sử lịch hẹn</a
+                  >
+                </li>
+                <li><a class="dropdown-item" href="/dangxuat">Đăng xuất</a></li>
+              </ul>
+            </li>
+            <% } else { %>
+            <li class="nav-item">
+              <a class="nav-link" href="/dangnhap">Đăng nhập/Đăng ký</a>
+            </li>
+            <% } %>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="main-content">
+      <div class="container">
+        <% if (error && error.length > 0) { %>
+        <p class="message-error"><%= error.join(', ') %></p>
+        <% } %>
+        <% if (success && success.length > 0) { %>
+        <p class="message-success"><%= success.join(', ') %></p>
+        <% } %>
+        <% if (success && success.length > 0 && bookingDetails && Object.keys(bookingDetails).length > 0) { %>
+        <p class="text-center" style="color: green; font-weight: bold;">Đặt lịch thành công! Vui lòng kiểm tra email để xác nhận lịch hẹn</p>
+        <% } %>
+
+        <div id="calendar-container" class="container">
+          <div class="calendar-header">
+            <h2>Vui lòng chọn ngày đặt lịch</h2>
+          </div>
+          <div class="calendar-nav">
+            <button id="prevMonth" disabled>←</button>
+            <span id="monthYear"></span>
+            <button id="nextMonth">→</button>
+          </div>
+          <div class="calendar-week">
+            <div>Hai</div>
+            <div>Ba</div>
+            <div>Tư</div>
+            <div>Năm</div>
+            <div>Sáu</div>
+            <div>Bảy</div>
+            <div>CN</div>
+          </div>
+          <div class="calendar-days" id="calendarDays"></div>
+          <div id="available-times" class="available-times mt-3"></div>
+        </div>
+
+        <div class="mb-3">
+          <label for="nhanvien" class="form-label">Nhân Viên</label>
+          <select class="form-control" id="nhanvien" name="nhanvien" required>
+            <option value="">Chọn nhân viên</option>
+            <% if (employees && employees.recordset && employees.recordset.length > 0) { %>
+            <% employees.recordset.forEach(employee => { %>
+            <option value="<%= employee.MaNV %>" <%= formData && formData.nhanvien == employee.MaNV ? 'selected' : '' %>>
+              <%= employee.HoTenNV %>
+            </option>
+            <% }) %>
+            <% } else { %>
+            <option value="" disabled class="no-data">Không có nhân viên nào</option>
+            <% } %>
+          </select>
+        </div>
+
+        <form
+          action="/datlich"
+          method="POST"
+          enctype="multipart/form-data"
+          id="bookingForm"
+        >
+          <input type="hidden" id="hiddenNgayhen" name="ngayhen" value="<%= formData && formData.ngayhen ? formData.ngayhen : '' %>" required />
+          <input type="hidden" id="thoigian" name="thoigian" value="<%= formData && formData.thoigian ? formData.thoigian : '' %>" required />
+          <input type="hidden" id="hiddenNhanvien" name="nhanvien" value="<%= formData && formData.nhanvien ? formData.nhanvien : '' %>" required />
+          <div class="mb-3">
+            <label for="dichvu" class="form-label">Dịch Vụ</label>
+            <select class="form-control" id="dichvu" name="dichvu" required>
+              <option value="">Chọn dịch vụ</option>
+              <% if (services && services.recordset && services.recordset.length > 0) { %>
+              <% services.recordset.forEach(service => { %>
+              <option value="<%= service.MaSP %>" <%= formData && formData.dichvu == service.MaSP ? 'selected' : '' %>>
+                <%= service.TenSP %> - <span class="service-price"><%= service.GiaSP.toLocaleString('vi-VN') %> VND</span>
+              </option>
+              <% }) %>
+              <% } else { %>
+              <option value="" disabled class="no-data">Không có dịch vụ nào</option>
+              <% } %>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="ghichu" class="form-label">Ghi Chú</label>
+            <textarea
+              class="form-control"
+              id="ghichu"
+              name="ghichu"
+              rows="4"
+            ><%= formData && formData.ghichu ? formData.ghichu : '' %></textarea>
+          </div>
+          <div class="mb-3">
+            <label for="hinhanh" class="form-label">Ảnh Mẫu Bạn Mong Muốn Phục Vụ(JPG/PNG)</label>
+            <input
+              type="file"
+              class="form-control"
+              id="hinhanh"
+              name="hinhanh"
+              accept="image/*"
+            />
+          </div>
+          <button type="submit" class="btn btn-primary w-100" style="background-color: #d8bea2; border-color: #d8bea2;">Đặt Lịch</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Modal for Booking Details -->
+    <div class="modal fade" id="bookingModal" tabindex="-1" aria-labelledby="bookingModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="bookingModalLabel">Chi tiết lịch hẹn vừa đặt</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <% if (success && success.length > 0 && bookingDetails && Object.keys(bookingDetails).length > 0) { %>
+              <p class="text-center" style="color: green; font-weight: bold;">Đặt lịch thành công! Vui lòng kiểm tra email để xác nhận lịch hẹn</p>
+              <p><strong>Ngày hẹn:</strong> <%= new Date(bookingDetails.ngayhen).toLocaleDateString('vi-VN') %></p>
+              <p><strong>Giờ hẹn:</strong> <%= bookingDetails.thoigian %></p>
+              <p><strong>Nhân viên:</strong> <%= bookingDetails.nhanvien %></p>
+              <p><strong>Dịch vụ:</strong> <%= bookingDetails.dichvu %></p>
+              <p><strong>Ghi chú:</strong> <%= bookingDetails.ghichu %></p>
+              <% if (bookingDetails.hinhanh) { %>
+                <p><strong>Hình ảnh:</strong></p>
+                <img src="<%= bookingDetails.hinhanh %>" alt="Hình ảnh đặt lịch" style="max-width: 200px;" />
+              <% } %>
+              <p><strong>Hình thức thanh toán:</strong> <%= bookingDetails.paymentType %></p>
+              <p><strong>Phương thức thanh toán:</strong> <%= bookingDetails.paymentMethod %></p>
+              <p><strong>Số tiền thanh toán:</strong> <%= bookingDetails.paymentAmount.toLocaleString('vi-VN') %> VND</p>
+              <p><strong>Tổng tiền:</strong> <%= bookingDetails.totalAmount.toLocaleString('vi-VN') %> VND</p>
+            <% } %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal for Payment Options -->
+    <div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="paymentModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="paymentModalLabel">Chọn Hình Thức Thanh Toán</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <p><strong>Dịch vụ:</strong> <span id="paymentServiceName"></span></p>
+            <p><strong>Giá dịch vụ:</strong> <span id="paymentServicePrice"></span> VND</p>
+            <p><strong>Tổng tiền:</strong> <span id="paymentTotal"></span> VND</p>
+
+            <h5>Hình thức thanh toán</h5>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="paymentType" id="deposit10" value="deposit10" checked>
+              <label class="form-check-label" for="deposit10">
+                Đặt cọc 10% (<span id="depositAmount"></span> VND)
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="paymentType" id="full100" value="full100">
+              <label class="form-check-label" for="full100">
+                Thanh toán toàn bộ 100% (<span id="fullAmount"></span> VND)
+              </label>
+            </div>
+
+            <h5 class="mt-3">Phương thức thanh toán</h5>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="paymentMethod" id="bankTransfer" value="bank">
+              <label class="form-check-label" for="bankTransfer">
+                Chuyển khoản ngân hàng
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="paymentMethod" id="momo" value="momo">
+              <label class="form-check-label" for="momo">
+                Ví điện tử (Momo)
+              </label>
+            </div>
+
+            <div id="paymentQR" class="mt-3 text-center">
+              <img id="qrImage" src="/uploads/thanhtoan/mbbank.jpg" alt="QR Code" style="max-width: 200px;" />
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+            <button type="button" class="btn btn-primary" id="confirmPayment" style="background-color: #d8bea2; border-color: #d8bea2;">Xác nhận thanh toán</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div>
+            <h2>Tiệm nail Diamond</h2>
+            <h3>Địa chỉ</h3>
+            <p>Hẻm 300, Khóm 1, Phường 8, Thành phố Trà Vinh, tỉnh Trà Vinh</p>
+            <h3>Liên hệ</h3>
+            <p>Điện thoại: 0784265668</p>
+            <p>Email: npb.duy.2002@gmail.com</p>
+          </div>
+          <div>
+            <h3>Bản đồ</h3>
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d245.63861717762805!2d106.31644629814373!3d9.915804120820384!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1zaOG6u20gMzAwIEtow7NtIDEgcGjGsOG7nW5nIDggVGjDoG5oIHBo4buRIFRyw6AgVmluaA!5e0!3m2!1svi!2s!4v1744661746153!5m2!1svi!2s"
+              width="100%"
+              height="200"
+              style="border: 0; border-radius: 10px"
+              allowfullscreen=""
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+            ></iframe>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      // Danh sách tất cả giờ có thể chọn (định dạng HH:mm)
+      const allTimes = [
+        "08:00",
+        "09:00",
+        "10:00",
+        "11:00",
+        "13:00",
+        "14:00",
+        "15:00",
+        "16:00",
+        "17:00",
+      ];
+      let currentMonth = new Date().getMonth();
+      let currentYear = new Date().getFullYear();
+      let selectedDate = null;
+      let availableDates = [];
+
+      const monthNames = [
+        "01",
+        "02",
+        "03",
+        "04",
+        "05",
+        "06",
+        "07",
+        "08",
+        "09",
+        "10",
+        "11",
+        "12",
+      ];
+
+      function renderCalendar() {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+        const lastDate = new Date(currentYear, currentMonth + 1, 0).getDate();
+        const prevLastDate = new Date(currentYear, currentMonth, 0).getDate();
+
+        document.getElementById(
+          "monthYear"
+        ).textContent = `Tháng ${monthNames[currentMonth]}-${currentYear}`;
+        document.getElementById("prevMonth").disabled =
+          currentMonth === today.getMonth() && currentYear === today.getFullYear();
+        document.getElementById("nextMonth").disabled = false;
+
+        let days = "";
+        const adjustedFirstDay = firstDay === 0 ? 6 : firstDay - 1;
+
+        for (let i = adjustedFirstDay; i > 0; i--) {
+          days += `<div class="disabled">${prevLastDate - i + 1}</div>`;
+        }
+
+        for (let i = 1; i <= lastDate; i++) {
+          const dateStr = `${currentYear}-${String(currentMonth + 1).padStart(
+            2,
+            "0"
+          )}-${String(i).padStart(2, "0")}`;
+          const isAvailable = availableDates.includes(dateStr);
+          const isPast = new Date(dateStr) < today;
+          const isSelected = selectedDate === dateStr ? "selected" : "";
+          const isDisabled = isPast || !isAvailable ? "disabled" : "";
+          days += `<div class="${isSelected} ${isDisabled}" data-date="${dateStr}">${i}</div>`;
+        }
+
+        document.getElementById("calendarDays").innerHTML = days;
+
+        document
+          .querySelectorAll(".calendar-days div:not(.disabled)")
+          .forEach((day) => {
+            day.addEventListener("click", () => {
+              document
+                .querySelectorAll(".calendar-days div")
+                .forEach((d) => d.classList.remove("selected"));
+              day.classList.add("selected");
+              selectedDate = day.dataset.date;
+              document.getElementById("hiddenNgayhen").value = selectedDate;
+              showAvailableTimes();
+            });
+          });
+      }
+
+      async function fetchAvailableDates() {
+        const nhanvien = document.getElementById("nhanvien").value;
+        const availableTimesDiv = document.getElementById("available-times");
+        document.getElementById("hiddenNhanvien").value = nhanvien;
+        document.getElementById("thoigian").value = "";
+        selectedDate = null;
+
+        availableTimesDiv.innerHTML = "";
+        if (!nhanvien) {
+          availableTimesDiv.innerHTML =
+            '<p class="message-error">Vui lòng chọn nhân viên trước!</p>';
+          availableDates = [];
+          renderCalendar();
+          return;
+        }
+
+        try {
+          const url = `/get-available-dates?maNV=${encodeURIComponent(nhanvien)}`;
+          const response = await fetch(url);
+          if (!response.ok) {
+            throw new Error(`Lỗi HTTP! Trạng thái: ${response.status}`);
+          }
+          const data = await response.json();
+          if (data.error) {
+            availableTimesDiv.innerHTML = `<p class="message-error">${data.error}</p>`;
+            availableDates = [];
+          } else if (data.availableDates.length === 0) {
+            availableTimesDiv.innerHTML =
+              '<p class="message-error">Không có ngày trống cho nhân viên này.</p>';
+            availableDates = [];
+          } else {
+            availableDates = data.availableDates;
+          }
+          renderCalendar();
+        } catch (error) {
+          console.error("Lỗi khi lấy danh sách ngày trống:", error);
+          availableTimesDiv.innerHTML =
+            '<p class="message-error">Không thể tải danh sách ngày trống. Vui lòng thử lại.</p>';
+          availableDates = [];
+          renderCalendar();
+        }
+      }
+
+      async function showAvailableTimes() {
+        const nhanvien = document.getElementById("nhanvien").value;
+        const availableTimesDiv = document.getElementById("available-times");
+
+        availableTimesDiv.innerHTML = '<p>Đang tải giờ trống...</p>';
+        document.getElementById("thoigian").value = "";
+
+        if (!selectedDate || !nhanvien) {
+          availableTimesDiv.innerHTML =
+            '<p class="message-error">Vui lòng chọn ngày và nhân viên!</p>';
+          return;
+        }
+
+        try {
+          const url = `/get-booked-times?date=${encodeURIComponent(
+            selectedDate
+          )}&maNV=${encodeURIComponent(nhanvien)}`;
+          const response = await fetch(url);
+          if (!response.ok) {
+            throw new Error(`Lỗi HTTP! Trạng thái: ${response.status}`);
+          }
+          const data = await response.json();
+
+          if (data.error) {
+            availableTimesDiv.innerHTML = `<p class="message-error">${data.error}</p>`;
+            return;
+          }
+
+          const bookedTimes = (data.bookedTimes || [])
+            .map((time) => {
+              if (time && typeof time === "string") {
+                const [hours, minutes] = time.trim().split(":");
+                return `${hours.padStart(2, "0")}:${minutes.slice(0, 2)}`;
+              }
+              return null;
+            })
+            .filter((time) => time && /^\d{2}:\d{2}$/.test(time));
+
+          let availableTimes = allTimes.filter(
+            (time) => !bookedTimes.includes(time)
+          );
+
+          const today = new Date();
+          today.setHours(0, 0, 0, 0);
+          const selectedDateObj = new Date(selectedDate);
+          selectedDateObj.setHours(0, 0, 0, 0);
+
+          if (selectedDateObj.getTime() === today.getTime()) {
+            const currentHour = new Date().getHours();
+            const currentMinute = new Date().getMinutes();
+            availableTimes = availableTimes.filter((time) => {
+              const [hours, minutes] = time.split(":").map(Number);
+              const timeInMinutes = hours * 60 + minutes;
+              const currentTimeInMinutes = currentHour * 60 + currentMinute;
+              return timeInMinutes >= currentTimeInMinutes + 30;
+            });
+          }
+
+          let timesHtml = "<h5>Chọn giờ:</h5>";
+          if (availableTimes.length === 0) {
+            timesHtml += `<p class="message-error">Không còn giờ trống trong ngày ${new Date(
+              selectedDate
+            ).toLocaleDateString("vi-VN")}.</p>`;
+          } else {
+            availableTimes.forEach((time) => {
+              timesHtml += `<button type="button" class="btn btn-outline-primary time-slot" data-time="${time}">${time}</button>`;
+            });
+          }
+
+          availableTimesDiv.innerHTML = timesHtml;
+
+          document.querySelectorAll(".time-slot").forEach((slot) => {
+            slot.addEventListener("click", () => {
+              document
+                .querySelectorAll(".time-slot")
+                .forEach((s) => s.classList.remove("selected"));
+              slot.classList.add("selected");
+              document.getElementById("thoigian").value = slot.dataset.time;
+            });
+          });
+        } catch (error) {
+          console.error("Lỗi khi lấy danh sách giờ đã đặt:", error);
+          availableTimesDiv.innerHTML = `<p class="message-error">Không thể tải danh sách giờ trống: ${error.message}. Vui lòng thử lại.</p>`;
+        }
+      }
+
+      // Xử lý sự kiện submit form
+      document.getElementById("bookingForm").addEventListener("submit", async (e) => {
+        e.preventDefault(); // Ngăn form gửi trực tiếp
+
+        const dichvu = document.getElementById("dichvu").value;
+        const ngayhen = document.getElementById("hiddenNgayhen").value;
+        const thoigian = document.getElementById("thoigian").value;
+        const nhanvien = document.getElementById("hiddenNhanvien").value;
+
+        if (!dichvu || !ngayhen || !thoigian || !nhanvien) {
+          alert("Vui lòng điền đầy đủ thông tin!");
+          return;
+        }
+
+        try {
+          // Lấy thông tin dịch vụ từ server
+          const response = await fetch(`/get-service-price?maSP=${encodeURIComponent(dichvu)}`);
+          if (!response.ok) {
+            throw new Error(`Lỗi HTTP! Trạng thái: ${response.status}`);
+          }
+          const data = await response.json();
+
+          if (data.error) {
+            alert(data.error);
+            return;
+          }
+
+          const { TenSP, GiaSP } = data;
+          const total = GiaSP;
+          const deposit = total * 0.1;
+
+          // Cập nhật thông tin vào modal
+          document.getElementById("paymentServiceName").textContent = TenSP;
+          document.getElementById("paymentServicePrice").textContent = GiaSP.toLocaleString("vi-VN");
+          document.getElementById("paymentTotal").textContent = total.toLocaleString("vi-VN");
+          document.getElementById("depositAmount").textContent = deposit.toLocaleString("vi-VN");
+          document.getElementById("fullAmount").textContent = total.toLocaleString("vi-VN");
+
+          // Hiển thị modal thanh toán
+          const paymentModal = new bootstrap.Modal(document.getElementById("paymentModal"));
+          paymentModal.show();
+        } catch (error) {
+          console.error("Lỗi khi lấy giá dịch vụ:", error);
+          alert("Không thể lấy thông tin dịch vụ. Vui lòng thử lại.");
+        }
+      });
+
+      // Xử lý thay đổi phương thức thanh toán
+      document.querySelectorAll('input[name="paymentMethod"]').forEach((radio) => {
+        radio.addEventListener("change", () => {
+          const qrImage = document.getElementById("qrImage");
+          const paymentQR = document.getElementById("paymentQR");
+          
+          // Hiển thị div chứa mã QR khi chọn phương thức thanh toán
+          paymentQR.style.display = "block";
+          
+          // Cập nhật hình ảnh QR dựa trên phương thức được chọn
+          if (radio.value === "bank") {
+            qrImage.src = "/uploads/thanhtoan/mbbank.jpg";
+          } else if (radio.value === "momo") {
+            qrImage.src = "/uploads/thanhtoan/momo.jpg";
+          }
+        });
+      });
+
+      // Xử lý xác nhận thanh toán
+      document.getElementById("confirmPayment").addEventListener("click", () => {
+        const paymentType = document.querySelector('input[name="paymentType"]:checked');
+        const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked');
+
+        if (!paymentMethod) {
+          alert("Vui lòng chọn một phương thức thanh toán!");
+          return;
+        }
+
+        const form = document.getElementById("bookingForm");
+        let input = document.createElement("input");
+        input.type = "hidden";
+        input.name = "paymentType";
+        input.value = paymentType.value;
+        form.appendChild(input);
+
+        input = document.createElement("input");
+        input.type = "hidden";
+        input.name = "paymentMethod";
+        input.value = paymentMethod.value;
+        form.appendChild(input);
+
+        // Gửi form
+        form.submit();
+
+        // Ẩn modal
+        const paymentModal = bootstrap.Modal.getInstance(document.getElementById("paymentModal"));
+        paymentModal.hide();
+      });
+      
+      // Thêm sự kiện
+      document
+        .getElementById("nhanvien")
+        .addEventListener("change", fetchAvailableDates);
+
+      document.getElementById("prevMonth").addEventListener("click", () => {
+        if (currentMonth === 0) {
+          currentMonth = 11;
+          currentYear--;
+        } else {
+          currentMonth--;
+        }
+        renderCalendar();
+      });
+
+      document.getElementById("nextMonth").addEventListener("click", () => {
+        if (currentMonth === 11) {
+          currentMonth = 0;
+          currentYear++;
+        } else {
+          currentMonth++;
+        }
+        renderCalendar();
+      });
+
+      fetchAvailableDates();
+
+      <% if (success && success.length > 0) { %>
+        setTimeout(fetchAvailableDates, 1000);
+      <% } %>
+
+      document.addEventListener('DOMContentLoaded', () => {
+        const messages = document.querySelectorAll('.message-success, .message-error');
+        messages.forEach(message => {
+          setTimeout(() => {
+            message.classList.add('fade-out');
+            setTimeout(() => {
+              message.style.display = 'none';
+            }, 500);
+          }, 3000);
+        });
+
+        <% if (success && success.length > 0 && bookingDetails && Object.keys(bookingDetails).length > 0) { %>
+          const bookingModal = new bootstrap.Modal(document.getElementById('bookingModal'));
+          bookingModal.show();
+        <% } %>
+      });
+    </script>
+    <!-- Thêm mã Crisp -->
+    <script type="text/javascript">
+      window.CRISP_WEBSITE_ID = "1943f314-1b1a-49aa-9069-02eb9fe4db8a";
+      (function () {
+        var d = document;
+        var s = d.createElement("script");
+        s.src = "https://client.crisp.chat/l.js";
+        s.async = 1;
+        d.getElementsByTagName("head")[0].appendChild(s);
+      })();
+    </script>
+  </body>
+</html>

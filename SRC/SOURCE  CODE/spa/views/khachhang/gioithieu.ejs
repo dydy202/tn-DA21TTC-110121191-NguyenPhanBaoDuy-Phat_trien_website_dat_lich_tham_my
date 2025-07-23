@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      http-equiv="Cache-Control"
+      content="no-cache, no-store, must-revalidate"
+    />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <title>Giới Thiệu - Tiệm Nail Diamond</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #fffaf0; /* Màu nền chính */
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+      .navbar {
+        background-color: #d8bea2 !important;
+      }
+      .navbar .nav-link {
+        color: #000000 !important;
+      }
+      .navbar .nav-link:hover {
+        color: #ffffff !important;
+      }
+      .navbar .navbar-brand {
+        color: #000000 !important;
+      }
+      .navbar-logo {
+        border-radius: 50px;
+        max-height: 80px;
+      }
+      .banner {
+        background: url("/uploads/banner.jpg") no-repeat center;
+        background-size: cover;
+        height: 500px;
+        color: rgb(0, 0, 0);
+        text-align: center;
+        padding-top: 200px;
+      }
+      .banner h1 {
+        font-size: 4em;
+      }
+      .service-section {
+        padding: 50px 0;
+        text-align: center;
+      }
+      .main-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 80%;
+        margin: 0 auto;
+        text-align: center;
+      }
+      .carousel-inner {
+        border-radius: 10px;
+        overflow: hidden;
+      }
+      .carousel-inner img {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+      }
+      .carousel-item img {
+        border-radius: 20px;
+        object-fit: cover;
+        border: none !important;
+      }
+      .slide,
+      .carousel,
+      .carousel-inner,
+      .carousel-item {
+        border-bottom: none !important;
+      }
+      .slide {
+        margin-bottom: 30px;
+      }
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 15px;
+      }
+      .instagram,
+      #nailit {
+        padding: 60px 0;
+        background-color: #fffaf0; /* Đồng bộ với màu nền body */
+      }
+      .section-title {
+        margin-bottom: 40px;
+        font-size: 2.5em;
+        color: #333;
+        text-align: center;
+        line-height: 1.4;
+        position: relative;
+      }
+      .section-title::after {
+        content: "";
+        display: block;
+        width: 60px;
+        height: 3px;
+        background: #d8bea2;
+        margin: 10px auto;
+      }
+      .section-title span {
+        color: #d8bea2;
+        font-weight: bold;
+      }
+      .section-subtitle {
+        font-size: 1.2em;
+        color: #d8bea2;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin-bottom: 10px;
+        text-align: center;
+      }
+      .section-subtitle2 {
+        font-size: 1.5em;
+        color: #333;
+        font-style: italic;
+        margin-bottom: 20px;
+        text-align: center;
+      }
+      .button-c {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #d8bea2;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+      }
+      .button-c:hover {
+        background-color: #c49a82;
+      }
+      .service-item h3 {
+        font-size: 23px;
+      }
+      .service-item p {
+        font-size: 19px;
+      }
+      .about-container {
+        max-width: 800px;
+        margin: 50px auto;
+        padding: 20px;
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+      .about-content {
+        text-align: justify;
+        padding: 0 20px;
+      }
+      .about-content p {
+        font-size: 16px;
+        line-height: 1.6;
+        color: #555;
+      }
+      .about-content img {
+        max-width: 100%;
+        border-radius: 10px;
+        margin-bottom: 20px;
+      }
+      .gallery-section {
+        margin-top: 30px;
+        padding: 0 20px;
+      }
+      .gallery {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+      }
+      .gallery img {
+        width: 23%;
+        height: auto;
+        border-radius: 10px;
+        object-fit: cover;
+      }
+      .footer {
+        background: #d8bea2;
+        color: #000;
+        padding: 20px 0;
+        margin-top: auto;
+      }
+      .footer-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+      }
+      .footer-grid > div {
+        flex: 1 1 300px;
+        padding: 15px;
+      }
+      .footer-grid h2 {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+      .footer-grid h3 {
+        font-size: 20px;
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+      .footer-grid p {
+        font-size: 0.9em; /* Giảm kích thước chữ */
+        margin-bottom: 5px;
+      }
+      .footer-grid a {
+        color: #000;
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+      .footer-grid a:hover {
+        color: #fff;
+      }
+      .alert {
+        margin: 20px auto;
+        max-width: 800px;
+      }
+      @media (max-width: 767px) {
+        .grid-inner {
+          flex-direction: column;
+          gap: 20px;
+        }
+        .grid-image,
+        .grid-content {
+          flex: 1 1 100%;
+        }
+        .section-title {
+          font-size: 2em;
+        }
+        .section-subtitle {
+          font-size: 1em;
+        }
+        .section-subtitle2 {
+          font-size: 1.2em;
+        }
+        .grid-url {
+          flex-direction: column;
+          gap: 10px;
+        }
+        .button-a,
+        .button-b {
+          width: 100%;
+          text-align: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Hiển thị thông báo -->
+    <% if (message && message.text) { %>
+    <div
+      class="alert alert-<%= message.type %> alert-dismissible fade show"
+      role="alert"
+    >
+      <%= message.text %>
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="alert"
+        aria-label="Close"
+      ></button>
+    </div>
+    <% } %>
+
+    <!-- Menu -->
+    <nav class="navbar navbar-expand-lg navbar-light">
+      <div class="container">
+        <a class="navbar-brand" href="/trangchu">
+          <img
+            src="/uploads/logo.png"
+            alt="Tiệm Nail Diamond"
+            class="navbar-logo"
+            style="max-height: 80px"
+          />
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="/trangchu">Trang chủ</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="/gioithieu">Giới thiệu</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/dichvu">Dịch vụ</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/hocvien">Học viện</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/tintuc">Tin tức</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/album">Album</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/datlich?redirect=/datlich">Đặt lịch</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/lienhe">Liên hệ</a>
+            </li>
+            <% if (user) { %>
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="navbarDropdown"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <%= user.HoTenKH || 'Tài khoản' %>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li>
+                  <a class="dropdown-item" href="/taikhoan">Sửa thông tin</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="/lichsu-lichhen"
+                    >Lịch sử lịch hẹn</a
+                  >
+                </li>
+                <li><a class="dropdown-item" href="/dangxuat">Đăng xuất</a></li>
+              </ul>
+            </li>
+            <% } else { %>
+            <li class="nav-item">
+              <a class="nav-link" href="/dangnhap">Đăng nhập/Đăng ký</a>
+            </li>
+            <% } %>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Nội dung -->
+    <section id="about">
+      <div class="container">
+        <div class="about-container">
+          <h2 class="section-title">
+            GIỚI THIỆU <span>TIỆM NAIL DIAMOND</span>
+          </h2>
+          <div class="about-content">
+            <p style="text-indent: 20px">
+              Chào mừng bạn đến với <strong>Tiệm Nail Diamond</strong> - nơi
+              mang đến vẻ đẹp hoàn hảo cho đôi tay và đôi chân của bạn! Chúng
+              tôi tự hào là địa chỉ uy tín tại Trà Vinh, cung cấp các dịch vụ
+              làm đẹp móng chuyên nghiệp với đội ngũ nhân viên lành nghề và tận
+              tâm.
+            </p>
+            <p style="text-indent: 20px">
+              Tại Tiệm Nail Diamond, chúng tôi sử dụng các sản phẩm chất lượng
+              cao và công nghệ hiện đại để đảm bảo mang lại trải nghiệm tuyệt
+              vời nhất cho khách hàng. Dù bạn muốn một bộ móng đơn giản, thanh
+              lịch hay những thiết kế sáng tạo, độc đáo, chúng tôi đều sẵn sàng
+              biến ý tưởng của bạn thành hiện thực.
+            </p>
+            <p style="text-indent: 20px">
+              Không chỉ dừng lại ở việc làm đẹp móng, chúng tôi còn mang đến
+              dịch vụ gội đầu thư giãn, giúp chăm sóc da đầu và mái tóc của bạn
+              một cách chuyên sâu. Nếu bạn muốn đôi mắt thêm phần cuốn hút, các
+              nghệ nhân nối mi của chúng tôi sẽ tạo ra hàng mi dày dặn, cong
+              vút, hoàn hảo cho khuôn mặt bạn. Và để tự tin tỏa sáng trong những
+              dịp đặc biệt hay đơn giản là muốn làm mới bản thân, đội ngũ chuyên
+              gia trang điểm của chúng tôi sẽ giúp bạn tôn lên vẻ đẹp tự nhiên
+              nhất với phong cách trang điểm tinh tế, ấn tượng.
+            </p>
+            <p style="text-indent: 20px">
+              Với sứ mệnh "Tôn vinh vẻ đẹp tự nhiên", chúng tôi cam kết mang đến
+              không gian thư giãn, thoải mái và dịch vụ chăm sóc khách hàng chu
+              đáo. Hãy đến với Tiệm Nail Diamond để cảm nhận sự khác biệt!
+            </p>
+            <p style="text-indent: 20px">
+              Chúng tôi cũng tự hào giới thiệu
+              <strong>Tiệm Nail Diamond</strong> – salon làm đẹp được yêu thích
+              bởi không gian độc đáo và cuốn hút. Với concept các tone màu sang
+              trọng, nền nã, NAIL ROOM luôn làm hài lòng khách yêu mỗi khi đặt
+              chân đến. Bên cạnh đó, NAIL ROOM tự hào sở hữu kho sơn khổng lồ,
+              đa dạng để khách yêu có thể thỏa thích lựa chọn màu sắc và phong
+              cách yêu thích. Hãy đến với chúng mình để được nhận những điều
+              tuyệt vời nhất nhé!!!
+            </p>
+            <p>
+              <strong>Địa chỉ:</strong> Hẻm 300, Khóm 1, Phường 8, Thành phố Trà
+              Vinh<br />
+              <strong>Hotline:</strong> 0784265668<br />
+              <strong>Email:</strong>
+              npb.duy.2002@gmail.com
+            </p>
+          </div>
+          <!-- Thêm khung gallery riêng biệt -->
+          <% if (roomImages && roomImages.length > 0) { %>
+          <div class="gallery-section">
+            <div class="gallery">
+              <% roomImages.forEach(function(image) { %>
+              <img
+                src="/uploads/room/<%= image %>"
+                alt="Hình ảnh không gian Tiệm Nail Diamond"
+              />
+              <% }); %>
+            </div>
+          </div>
+          <% } %>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div>
+            <h2>Tiệm nail Diamond</h2>
+            <h3>Địa chỉ</h3>
+            <p>Hẻm 300, Khóm 1, Phường 8, Thành phố Trà Vinh, tỉnh Trà Vinh</p>
+            <h3>Liên hệ</h3>
+            <p>Điện thoại: 0784265668</p>
+            <p>Email: npb.duy.2002@gmail.com</p>
+          </div>
+          <div>
+            <h3>Bản đồ</h3>
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d245.63861717762805!2d106.31644629814373!3d9.915804120820384!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1zaOG6u20gMzAwIEtow7NtIDEgcGjGsOG7nW5nIDggVGjDoG5oIHBo4buRIFRyw6AgVmluaA!5e0!3m2!1svi!2s!4v1744661746153!5m2!1svi!2s"
+              width="100%"
+              height="200"
+              style="border: 0; border-radius: 10px"
+              allowfullscreen=""
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+            ></iframe>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Thêm mã Crisp -->
+    <script type="text/javascript">
+      window.CRISP_WEBSITE_ID = "1943f314-1b1a-49aa-9069-02eb9fe4db8a";
+      (function () {
+        var d = document;
+        var s = d.createElement("script");
+        s.src = "https://client.crisp.chat/l.js";
+        s.async = 1;
+        d.getElementsByTagName("head")[0].appendChild(s);
+      })();
+    </script>
+  </body>
+</html>

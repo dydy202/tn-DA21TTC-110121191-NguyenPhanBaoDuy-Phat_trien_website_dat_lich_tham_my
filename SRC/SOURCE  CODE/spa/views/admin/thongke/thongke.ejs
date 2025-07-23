@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Thống Kê - Tiệm Nail Diamond</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #fffaf0;
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+      .container {
+        width: 100%;
+        margin: 0;
+        padding: 0 15px;
+        display: flex;
+        min-height: 100vh;
+      }
+      .sidebar {
+        width: 145px;
+        background-color: #c49a82;
+        color: #000;
+        padding: 20px;
+        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+      }
+      .sidebar h2 {
+        font-size: 1.5em;
+        margin-bottom: 20px;
+        text-align: center;
+      }
+      .sidebar ul {
+        list-style: none;
+        padding: 0;
+      }
+      .sidebar ul li {
+        margin: 10px 0;
+      }
+      .sidebar ul li a {
+        color: #000;
+        text-decoration: none;
+        font-size: 1.1em;
+        display: block;
+        padding: 10px;
+        border-radius: 5px;
+        transition: background 0.3s;
+      }
+      .sidebar ul li a:hover {
+        background-color: #d8bea2;
+        color: #fff;
+      }
+      .content {
+        flex: 1;
+        padding: 30px;
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        margin: 20px;
+        border-radius: 8px;
+      }
+      .content h1 {
+        font-size: 2em;
+        color: #000;
+        margin-bottom: 10px;
+        text-align: center;
+      }
+      .message {
+        color: #000;
+        background-color: #fffaf0;
+        padding: 10px;
+        border: 1px solid #d8bea2;
+        border-radius: 5px;
+        margin-bottom: 20px;
+      }
+      .error {
+        color: #000;
+        background-color: #f8f9fa;
+        padding: 10px;
+        border: 1px solid #6c757d;
+        border-radius: 5px;
+        margin-bottom: 20px;
+      }
+      .logout-btn {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #d8bea2;
+        color: #000;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background 0.3s;
+      }
+      .logout-btn:hover {
+        background-color: #c49a82;
+        color: #fff;
+      }
+      .export-btn {
+        display: inline-block;
+        padding: 10px 20px;
+        margin: 10px 5px;
+        background-color: #28a745;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background 0.3s;
+      }
+      .export-btn:hover {
+        background-color: #218838;
+      }
+      .chart-container {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+      }
+      .chart-container h2 {
+        font-size: 1.5em;
+        margin-bottom: 15px;
+        color: #000;
+      }
+      canvas {
+        max-width: 100%;
+      }
+      @media (max-width: 768px) {
+        .container {
+          flex-direction: column;
+        }
+        .sidebar {
+          width: 100%;
+          padding: 10px;
+        }
+        .content {
+          margin: 10px;
+          padding: 15px;
+        }
+        .chart-container {
+          padding: 10px;
+          animation: false;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="sidebar">
+        <h2>Quản Lý</h2>
+        <ul>
+          <li><a href="/admin/taikhoan">Tài Khoản</a></li>
+          <li><a href="/admin/khachhang">Khách Hàng</a></li>
+          <li><a href="/admin/nhanvien">Nhân Viên</a></li>
+          <li><a href="/admin/loaisanpham">Loại Sản Phẩm</a></li>
+          <li><a href="/admin/sanpham">Sản Phẩm</a></li>
+          <li><a href="/admin/lichhen">Lịch Hẹn</a></li>
+          <li><a href="/admin/baiviet">Bài Viết</a></li>
+          <li><a href="/admin/hoadon">Hóa Đơn</a></li>
+          <li><a href="/admin/danhgia">Đánh Giá</a></li>
+          <li><a href="/admin/thongke">Thống Kê</a></li>
+          <li><a href="/admin/nghiphep">Nghỉ Phép</a></li>
+        </ul>
+      </div>
+      <div class="content">
+        <h1>Thống Kê</h1>
+        <% if (message) { %>
+        <p
+          class="<% if (message.includes('lỗi')) { %>error<% } else { %>message<% } %>"
+        >
+          <%= message %>
+        </p>
+        <% } %>
+        <a href="/dangxuat" class="logout-btn">Đăng Xuất</a>
+        <a href="/admin/thongke/export-excel" class="export-btn">Xuất Excel</a>
+        <a href="#" class="export-btn" onclick="exportToPDF()">Xuất PDF</a
+        ><br /><br />
+
+        <!-- Biểu đồ dịch vụ được đặt nhiều nhất -->
+        <div class="chart-container" id="topServicesSection">
+          <h2>Dịch Vụ Được Đặt Nhiều Nhất</h2>
+          <canvas id="topServicesChart"></canvas>
+        </div>
+
+        <!-- Biểu đồ lịch hẹn -->
+        <div class="chart-container" id="appointmentsSection">
+          <h2>Thống Kê Lịch Hẹn</h2>
+          <canvas id="appointmentsChart"></canvas>
+        </div>
+
+        <!-- Biểu đồ lịch nghỉ nhân viên -->
+        <div class="chart-container" id="employeeLeavesSection">
+          <h2>Thống Kê Lịch Nghỉ Nhân Viên</h2>
+          <canvas id="employeeLeavesChart"></canvas>
+        </div>
+
+        <!-- Biểu đồ khách hàng dùng dịch vụ nhiều nhất -->
+        <div class="chart-container" id="topCustomersSection">
+          <h2>Khách Hàng Đặt Nhiều Nhất</h2>
+          <canvas id="topCustomersChart"></canvas>
+        </div>
+
+        <!-- Biểu đồ doanh thu -->
+        <div class="chart-container" id="revenueSection">
+          <h2>Thống Kê Doanh Thu</h2>
+          <canvas id="revenueChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Hàm định dạng số tiền thành dạng 10.000 VNĐ
+      function formatVND(value) {
+        return value.toLocaleString('vi-VN') + ' VNĐ';
+      }
+
+      // Hàm xuất PDF
+      function exportToPDF() {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF('p', 'pt', 'a4');
+        const sections = [
+          'topServicesSection',
+          'appointmentsSection',
+          'employeeLeavesSection',
+          'topCustomersSection',
+          'revenueSection'
+        ];
+
+        let promises = [];
+        sections.forEach((sectionId, index) => {
+          const section = document.getElementById(sectionId);
+          promises.push(
+            html2canvas(section, { scale: 2 }).then(canvas => {
+              const imgData = canvas.toDataURL('image/png');
+              const imgWidth = 595.28; // A4 width in points
+              const pageHeight = 841.89; // A4 height in points
+              const imgHeight = (canvas.height * imgWidth) / canvas.width;
+              let heightLeft = imgHeight;
+              let position = 20;
+
+              if (index > 0) {
+                doc.addPage();
+              }
+              doc.text(section.querySelector('h2').textContent, 20, 20);
+              position += 30;
+              doc.addImage(imgData, 'PNG', 20, position, imgWidth - 40, imgHeight);
+              heightLeft -= pageHeight;
+
+              while (heightLeft >= 0) {
+                doc.addPage();
+                position = heightLeft - imgHeight;
+                doc.addImage(imgData, 'PNG', 20, position, imgWidth - 40, imgHeight);
+                heightLeft -= pageHeight;
+              }
+            })
+          );
+        });
+
+        Promise.all(promises).then(() => {
+          doc.save('ThongKe_TiemNailDiamond.pdf');
+        });
+      }
+
+      // Biểu đồ dịch vụ được đặt nhiều nhất
+      const topServicesCtx = document.getElementById('topServicesChart').getContext('2d');
+      new Chart(topServicesCtx, {
+        type: 'bar',
+        data: {
+          labels: <%- JSON.stringify(topServices.map(s => s.TenSP)) %>,
+          datasets: [{
+            label: 'Số Lần Đặt',
+            data: <%- JSON.stringify(topServices.map(s => s.SoLanDat)) %>,
+            backgroundColor: 'rgba(75, 192, 192, 0.5)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 1
+          }]
+        },
+        options: {
+          scales: {
+            y: { beginAtZero: true }
+          }
+        }
+      });
+
+      // Biểu đồ lịch hẹn
+      const appointmentsCtx = document.getElementById('appointmentsChart').getContext('2d');
+      new Chart(appointmentsCtx, {
+        type: 'bar',
+        data: {
+          labels: ['Trong Ngày', 'Trong Tháng', 'Trong Năm'],
+          datasets: [{
+            label: 'Số Lượng Lịch Hẹn',
+            data: [<%= dailyAppointments %>, <%= monthlyAppointments %>, <%= yearlyAppointments %>],
+            backgroundColor: ['rgba(255, 99, 132, 0.5)', 'rgba(54, 162, 235, 0.5)', 'rgba(255, 206, 86, 0.5)'],
+            borderColor: ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)'],
+            borderWidth: 1
+          }]
+        },
+        options: {
+          scales: {
+            y: { beginAtZero: true }
+          }
+        }
+      });
+
+      // Biểu đồ lịch nghỉ nhân viên
+      const employeeLeavesCtx = document.getElementById('employeeLeavesChart').getContext('2d');
+      new Chart(employeeLeavesCtx, {
+        type: 'bar',
+        data: {
+          labels: <%- JSON.stringify(employeeLeaves.map(e => e.HoTenNV)) %>,
+          datasets: [{
+            label: 'Số Ngày Nghỉ',
+            data: <%- JSON.stringify(employeeLeaves.map(e => e.SoNgayNghi)) %>,
+            backgroundColor: 'rgba(153, 102, 255, 0.5)',
+            borderColor: 'rgba(153, 102, 255, 1)',
+            borderWidth: 1
+          }]
+        },
+        options: {
+          scales: {
+            y: { beginAtZero: true }
+          }
+        }
+      });
+
+      // Biểu đồ khách hàng đặt nhiều nhất
+      const topCustomersCtx = document.getElementById('topCustomersChart').getContext('2d');
+      new Chart(topCustomersCtx, {
+        type: 'bar',
+        data: {
+          labels: <%- JSON.stringify(topCustomers.map(c => c.HoTenKH)) %>,
+          datasets: [{
+            label: 'Số Lần Đặt',
+            data: <%- JSON.stringify(topCustomers.map(c => c.SoLanDat)) %>,
+            backgroundColor: 'rgba(255, 159, 64, 0.5)',
+            borderColor: 'rgba(255, 159, 64, 1)',
+            borderWidth: 1
+          }]
+        },
+        options: {
+          scales: {
+            y: { beginAtZero: true }
+          }
+        }
+      });
+
+      // Biểu đồ doanh thu
+      const revenueCtx = document.getElementById('revenueChart').getContext('2d');
+      new Chart(revenueCtx, {
+        type: 'bar',
+        data: {
+          labels: ['Trong Ngày', 'Trong Tháng', 'Trong Năm'],
+          datasets: [{
+            label: 'Doanh Thu (VND)',
+            data: [<%= dailyRevenue %>, <%= monthlyRevenue %>, <%= yearlyRevenue %>],
+            backgroundColor: ['rgba(255, 99, 132, 0.5)', 'rgba(54, 162, 235, 0.5)', 'rgba(255, 206, 86, 0.5)'],
+            borderColor: ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)'],
+            borderWidth: 1
+          }]
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true,
+              ticks: {
+                callback: function(value) {
+                  return formatVND(value);
+                }
+              }
+            }
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quản Lý Nghỉ Phép - Tiệm Nail Diamond</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #fffaf0;
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .container {
+        width: 100%;
+        margin: 0;
+        padding: 0 15px;
+        display: flex;
+        min-height: 100vh;
+      }
+
+      .sidebar {
+        width: 145px;
+        background-color: #c49a82;
+        color: #000;
+        padding: 20px;
+        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+      }
+
+      .sidebar h2 {
+        font-size: 1.5em;
+        margin-bottom: 20px;
+        text-align: center;
+      }
+
+      .sidebar ul {
+        list-style: none;
+        padding: 0;
+      }
+
+      .sidebar ul li {
+        margin: 10px 0;
+      }
+
+      .sidebar ul li a {
+        color: #000;
+        text-decoration: none;
+        font-size: 1.1em;
+        display: block;
+        padding: 10px;
+        border-radius: 5px;
+        transition: background 0.3s;
+      }
+
+      .sidebar ul li a:hover {
+        background-color: #d8bea2;
+        color: #fff;
+      }
+
+      .content {
+        flex: 1;
+        padding: 30px;
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        margin: 20px;
+        border-radius: 8px;
+      }
+
+      .content h1 {
+        font-size: 2em;
+        color: #000;
+        margin-bottom: 10px;
+        text-align: center;
+      }
+
+      .message {
+        color: #000;
+        background-color: #fffaf0;
+        padding: 10px;
+        border: 1px solid #d8bea2;
+        border-radius: 5px;
+        margin-bottom: 20px;
+      }
+
+      .error {
+        color: #000;
+        background-color: #f8f9fa;
+        padding: 10px;
+        border: 1px solid #6c757d;
+        border-radius: 5px;
+        margin-bottom: 20px;
+      }
+
+      .logout-btn {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #d8bea2;
+        color: #000;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background 0.3s;
+      }
+
+      .logout-btn:hover {
+        background-color: #c49a82;
+        color: #fff;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+      }
+
+      table,
+      th,
+      td {
+        border: 1px solid #ddd;
+      }
+
+      th,
+      td {
+        padding: 12px;
+        text-align: left;
+      }
+
+      th {
+        background-color: #d8bea2;
+        color: #000;
+      }
+
+      tr:nth-child(even) {
+        background-color: #f9f9f9;
+      }
+
+      tr:hover {
+        background-color: #f1f1f1;
+      }
+
+      .action-btn {
+        padding: 8px 12px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        color: #000;
+        display: inline-block;
+        margin-right: 5px;
+        margin-bottom: 5px;
+      }
+
+      .approve-btn {
+        background-color: #d8bea2;
+      }
+
+      .approve-btn:hover {
+        background-color: #c49a82;
+        color: #fff;
+      }
+
+      .reject-btn {
+        background-color: #6c757d;
+      }
+
+      .reject-btn:hover {
+        background-color: #5a6268;
+        color: #fff;
+      }
+
+      .pagination {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+      }
+
+      .pagination a {
+        margin: 0 5px;
+        padding: 8px 12px;
+        border: 1px solid #d8bea2;
+        border-radius: 5px;
+        text-decoration: none;
+        color: #000;
+      }
+
+      .pagination a.active {
+        background-color: #d8bea2;
+        color: #fff;
+      }
+
+      .pagination a:hover {
+        background-color: #c49a82;
+        color: #fff;
+      }
+
+      .pagination a.disabled {
+        color: #6c757d;
+        pointer-events: none;
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          flex-direction: column;
+        }
+        .sidebar {
+          width: 100%;
+          padding: 10px;
+        }
+        .content {
+          margin: 10px;
+          padding: 15px;
+        }
+        table {
+          font-size: 0.9em;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="sidebar">
+        <h2>Quản Lý</h2>
+        <ul>
+          <li><a href="/admin/taikhoan">Tài Khoản</a></li>
+          <li><a href="/admin/khachhang">Khách Hàng</a></li>
+          <li><a href="/admin/nhanvien">Nhân Viên</a></li>
+          <li><a href="/admin/loaisanpham">Loại Sản Phẩm</a></li>
+          <li><a href="/admin/sanpham">Sản Phẩm</a></li>
+          <li><a href="/admin/lichhen">Lịch Hẹn</a></li>
+          <li><a href="/admin/baiviet">Bài Viết</a></li>
+          <li><a href="/admin/hoadon">Hóa Đơn</a></li>
+          <li><a href="/admin/danhgia">Đánh Giá</a></li>
+          <li><a href="/admin/thongke">Thống Kê</a></li>
+          <li><a href="/admin/nghiphep">Nghỉ Phép</a></li>
+        </ul>
+      </div>
+      <div class="content">
+        <h1>Quản Lý Nghỉ Phép</h1>
+        <% if (message) { %>
+        <p
+          class="<% if (message.includes('lỗi')) { %>error<% } else { %>message<% } %>"
+        >
+          <%= message %>
+        </p>
+        <% } %>
+        <a href="/dangxuat" class="logout-btn">Đăng Xuất</a><br /><br />
+        <% if (leaveRequests && leaveRequests.length > 0) { %>
+        <table>
+          <thead>
+            <tr>
+              <th>Số Thứ Tự</th>
+              <th>Nhân Viên</th>
+              <th>Ngày Nghỉ</th>
+              <th>Lý Do</th>
+              <th>Trạng Thái</th>
+              <th>Hành Động</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% leaveRequests.forEach(function(item, index) { %>
+            <tr>
+              <td><%= (currentPage - 1) * 10 + index + 1 %></td>
+              <td><%= item.HoTenNV %></td>
+              <td>
+                <%= new Date(item.NgayNghi).toLocaleDateString('vi-VN') %>
+              </td>
+              <td><%= item.LyDo || 'N/A' %></td>
+              <td><%= item.TrangThaiNghi %></td>
+              <td>
+                <% if (item.TrangThaiNghi === 'Chờ duyệt') { %>
+                <form
+                  action="/admin/nghiphep/approve"
+                  method="POST"
+                  style="display: inline"
+                >
+                  <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+                  <input
+                    type="hidden"
+                    name="maNghiPhep"
+                    value="<%= item.MaNghiPhep %>"
+                  />
+                  <button
+                    type="submit"
+                    class="action-btn approve-btn"
+                    onclick="return confirm('Bạn có chắc muốn duyệt yêu cầu này?')"
+                  >
+                    Đồng ý
+                  </button>
+                </form>
+                <form
+                  action="/admin/nghiphep/reject"
+                  method="POST"
+                  style="display: inline"
+                >
+                  <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+                  <input
+                    type="hidden"
+                    name="maNghiPhep"
+                    value="<%= item.MaNghiPhep %>"
+                  />
+                  <button
+                    type="submit"
+                    class="action-btn reject-btn"
+                    onclick="return confirm('Bạn có chắc muốn từ chối yêu cầu này?')"
+                  >
+                    Không
+                  </button>
+                </form>
+                <% } %>
+              </td>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
+        <!-- Phân trang -->
+        <div class="pagination">
+          <% if (currentPage > 1) { %>
+          <a href="/admin/nghiphep?page=<%= currentPage - 1 %>">« Trước</a>
+          <% } else { %>
+          <a class="disabled">« Trước</a>
+          <% } %> <% for (let i = 1; i <= totalPages; i++) { %>
+          <a
+            href="/admin/nghiphep?page=<%= i %>"
+            class="<%= i === currentPage ? 'active' : '' %>"
+          >
+            <%= i %>
+          </a>
+          <% } %> <% if (currentPage < totalPages) { %>
+          <a href="/admin/nghiphep?page=<%= currentPage + 1 %>">Sau »</a>
+          <% } else { %>
+          <a class="disabled">Sau »</a>
+          <% } %>
+        </div>
+        <% } else { %>
+        <p>Không có yêu cầu nghỉ phép nào.</p>
+        <% } %>
+      </div>
+    </div>
+  </body>
+</html>

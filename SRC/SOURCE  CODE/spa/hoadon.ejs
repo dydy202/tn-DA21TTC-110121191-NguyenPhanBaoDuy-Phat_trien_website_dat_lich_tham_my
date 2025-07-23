@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hóa Đơn #<%= hoaDon.MaHD %> - Tiệm Nail Diamond</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #fff0f0;
+      }
+      .main-content {
+        max-width: 800px;
+        margin: 40px auto;
+        padding: 20px;
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      .navbar {
+        background-color: #d8bea2 !important;
+      }
+      .navbar .nav-link,
+      .navbar .navbar-brand {
+        color: #000 !important;
+      }
+      .navbar .nav-link:hover {
+        color: #fff !important;
+      }
+      .invoice-header {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+      .invoice-details {
+        margin-bottom: 20px;
+      }
+      @media print {
+        .no-print {
+          display: none;
+        }
+        .main-content {
+          box-shadow: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light no-print">
+      <div class="container">
+        <a class="navbar-brand" href="/admin">Tiệm Nail Diamond</a>
+        <div class="collapse navbar-collapse">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="/admin/quanlylichhen"
+                >Quản Lý Lịch Hẹn</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/dangxuat">Đăng Xuất</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="main-content">
+      <div class="invoice-header">
+        <h2>Hóa Đơn #<%= hoaDon.MaHD %></h2>
+        <p>Tiệm Nail Diamond</p>
+      </div>
+      <% if (message) { %>
+      <div
+        class="alert alert-<%= message.includes('thành công') ? 'success' : 'danger' %> alert-dismissible fade show no-print"
+      >
+        <%= message %>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="alert"
+        ></button>
+      </div>
+      <% } %>
+      <div class="invoice-details">
+        <h4>Thông Tin Khách Hàng</h4>
+        <p><strong>Họ Tên:</strong> <%= hoaDon.HoTenKH %></p>
+        <p><strong>Email:</strong> <%= hoaDon.EmailKH %></p>
+        <p><strong>Số Điện Thoại:</strong> <%= hoaDon.SoDienThoaiKH %></p>
+        <h4>Thông Tin Hóa Đơn</h4>
+        <p><strong>Mã Hóa Đơn:</strong> <%= hoaDon.MaHD %></p>
+        <p>
+          <strong>Ngày Lập:</strong> <%= new
+          Date(hoaDon.NgayLapHD).toLocaleDateString('vi-VN') %>
+        </p>
+        <p>
+          <strong>Phương Thức Thanh Toán:</strong> <%=
+          hoaDon.PhuongThucThanhToan || 'Chưa xác định' %>
+        </p>
+        <p><strong>Trạng Thái:</strong> <%= hoaDon.TrangThaiHD %></p>
+      </div>
+      <h4>Chi Tiết Hóa Đơn</h4>
+      <div class="table-responsive">
+        <table class="table table-bordered">
+          <thead class="table-light">
+            <tr>
+              <th>Sản Phẩm/Dịch Vụ</th>
+              <th>Số Lượng</th>
+              <th>Đơn Giá</th>
+              <th>Thành Tiền</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% chiTiet.forEach(item => { %>
+            <tr>
+              <td><%= item.TenSP %></td>
+              <td><%= item.SoLuong %></td>
+              <td><%= item.DonGia.toLocaleString('vi-VN') %> VNĐ</td>
+              <td>
+                <%=(item.SoLuong * item.DonGia).toLocaleString('vi-VN') %> VNĐ
+              </td>
+            </tr>
+            <% }) %>
+            <tr>
+              <td colspan="3" class="text-end"><strong>Tổng Tiền:</strong></td>
+              <td>
+                <strong
+                  ><%= hoaDon.TongTien.toLocaleString('vi-VN') %> VNĐ</strong
+                >
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="text-center no-print">
+        <button onclick="window.print()" class="btn btn-primary">
+          In Hóa Đơn
+        </button>
+        <button onclick="exportPDF()" class="btn btn-success">Xuất PDF</button>
+        <a href="/admin/quanlylichhen" class="btn btn-secondary">Quay Lại</a>
+      </div>
+    </div>
+    <script>
+      function exportPDF() {
+        const element = document.querySelector(".main-content");
+        html2pdf()
+          .from(element)
+          .set({
+            margin: 10,
+            filename: "hoa-don-<%= hoaDon.MaHD %>.pdf",
+            html2canvas: { scale: 2 },
+            jsPDF: { orientation: "portrait", unit: "mm", format: "a4" },
+          })
+          .save();
+      }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

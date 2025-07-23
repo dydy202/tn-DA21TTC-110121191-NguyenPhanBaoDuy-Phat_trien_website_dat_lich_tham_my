@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quản Trị</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="sidebar">
+        <h2>Chọn mục để quản lý:</h2>
+        <ul>
+          <li><a href="/admin/taikhoan">Tài Khoản</a></li>
+          <li><a href="/admin/khachhang">Khách Hàng</a></li>
+          <li><a href="/admin/nhanvien">Nhân Viên</a></li>
+          <li><a href="/admin/loaisanpham">Loại Nhóm Sản Phẩm</a></li>
+          <li><a href="/admin/sanpham">Sản Phẩm</a></li>
+          <li><a href="/admin/lichhen">Lịch Hẹn</a></li>
+          <li><a href="/admin/hoadon">Hóa Đơn</a></li>
+          <li><a href="/admin/danhgia">Đánh Giá</a></li>
+        </ul>
+      </div>
+      <div class="content">
+        <h1>Danh Sách Khách Hàng</h1>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Họ và Tên</th>
+              <th>Email</th>
+              <th>Số Điện Thoại</th>
+              <th>Ngày Tạo</th>
+              <th>Hành Động</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% khachhang.forEach(kh => { %>
+            <tr>
+              <td><%= kh.hotenkhachhang %></td>
+              <td><%= kh.email %></td>
+              <td><%= kh.sodienthoai %></td>
+              <td>
+                <%= new Date(kh.ngaytao).toLocaleString('vi-VN', { hour24: false
+                }) %>
+              </td>
+              <td>
+                <form
+                  action="/khachhang/suakhachhang/<%= kh.khachhang_id %>"
+                  method="GET"
+                  style="display: inline"
+                >
+                  <button type="submit">Sửa</button>
+                </form>
+                <form
+                  action="/khachhang/xoa/<%= kh.khachhang_id %>"
+                  method="POST"
+                  style="display: inline"
+                >
+                  <button type="submit">Xóa</button>
+                </form>
+              </td>
+            </tr>
+            <% }); %>
+          </tbody>
+        </table>
+        <form
+          action="/khachhang/themkhachhang"
+          method="GET"
+          style="display: inline"
+        >
+          <button type="submit">Thêm khách hàng</button>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

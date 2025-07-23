@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sửa Đánh Giá</title>
+    <style>
+      body {
+        font-family: "Arial", sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f9;
+      }
+      .container {
+        display: flex;
+        min-height: 100vh;
+      }
+      .sidebar {
+        width: 250px;
+        background-color: #2c3e50;
+        color: white;
+        padding: 20px;
+        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+      }
+      .sidebar h2 {
+        font-size: 1.5em;
+        margin-bottom: 20px;
+        text-align: center;
+      }
+      .sidebar ul {
+        list-style: none;
+        padding: 0;
+      }
+      .sidebar ul li {
+        margin: 10px 0;
+      }
+      .sidebar ul li a {
+        color: white;
+        text-decoration: none;
+        font-size: 1.1em;
+        display: block;
+        padding: 10px;
+        border-radius: 5px;
+        transition: background 0.3s;
+      }
+      .sidebar ul li a:hover {
+        background-color: #34495e;
+      }
+      .content {
+        flex: 1;
+        padding: 30px;
+        background-color: white;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        margin: 20px;
+        border-radius: 8px;
+      }
+      .content h1 {
+        font-size: 2em;
+        color: #2c3e50;
+        margin-bottom: 20px;
+      }
+      .error {
+        color: #c0392b;
+        background-color: #fdedec;
+        padding: 10px;
+        border-radius: 5px;
+        margin-bottom: 20px;
+      }
+      .form-container {
+        margin-bottom: 20px;
+        padding: 20px;
+        background-color: #f9f9f9;
+        border-radius: 8px;
+      }
+      .form-container input,
+      .form-container select,
+      .form-container textarea {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+      }
+      .form-container textarea {
+        height: 100px;
+        resize: vertical;
+      }
+      .form-container button {
+        padding: 10px 20px;
+        background-color: #27ae60;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      .form-container button:hover {
+        background-color: #219653;
+      }
+      .action-btn {
+        padding: 8px 12px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        color: white;
+        display: inline-block;
+        margin-right: 5px;
+      }
+      @media (max-width: 768px) {
+        .container {
+          flex-direction: column;
+        }
+        .sidebar {
+          width: 100%;
+          padding: 10px;
+        }
+        .content {
+          margin: 10px;
+          padding: 15px;
+        }
+      }
+    </style>
+    <script>
+      function validateForm() {
+        const diemDG = document.getElementById("diemDG").value;
+        if (diemDG < 1 || diemDG > 5) {
+          alert("Điểm đánh giá phải từ 1 đến 5!");
+          return false;
+        }
+        return true;
+      }
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="sidebar">
+        <h2>Quản Lý</h2>
+        <ul>
+          <li><a href="/admin/taikhoan">Tài Khoản</a></li>
+          <li><a href="/admin/quyen">Quyền</a></li>
+          <li><a href="/admin/khachhang">Khách Hàng</a></li>
+          <li><a href="/admin/nhanvien">Nhân Viên</a></li>
+          <li><a href="/admin/loaisanpham">Loại Sản Phẩm</a></li>
+          <li><a href="/admin/sanpham">Sản Phẩm</a></li>
+          <li><a href="/admin/lichhen">Lịch Hẹn</a></li>
+          <li><a href="/admin/baiviet">Bài Viết</a></li>
+          <li><a href="/admin/hoadon">Hóa Đơn</a></li>
+          <li><a href="/admin/chitiethoadon">Chi Tiết Hóa Đơn</a></li>
+          <li><a href="/admin/danhgia">Đánh Giá</a></li>
+        </ul>
+      </div>
+      <div class="content">
+        <h1>Sửa Đánh Giá</h1>
+        <% if (message) { %>
+        <p class="error"><%= message %></p>
+        <% } %>
+        <div class="form-container">
+          <form
+            action="/admin/danhgia/edit"
+            method="POST"
+            onsubmit="return validateForm()"
+          >
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+            <input type="hidden" name="maDG" value="<%= danhgia.MaDG %>" />
+            <label for="maKH">Khách Hàng:</label>
+            <select id="maKH" name="maKH" required>
+              <% khachhang.forEach(function(item) { %>
+              <option
+                value="<%= item.MaKH %>"
+                <%= danhgia.MaKH === item.MaKH ? 'selected' : '' %>
+              >
+                <%= item.HoTenKH %>
+              </option>
+              <% }) %>
+            </select>
+            <label for="maCTHD">Mã Chi Tiết Hóa Đơn:</label>
+            <select id="maCTHD" name="maCTHD" required>
+              <% chitiethoadon.forEach(function(item) { %>
+              <option
+                value="<%= item.MaCTHD %>"
+                <%= danhgia.MaCTHD === item.MaCTHD ? 'selected' : '' %>
+              >
+                <%= item.MaCTHD %>
+              </option>
+              <% }) %>
+            </select>
+            <label for="diemDG">Điểm Đánh Giá (1-5):</label>
+            <input
+              type="number"
+              id="diemDG"
+              name="diemDG"
+              value="<%= danhgia.DiemDG %>"
+              required
+              min="1"
+              max="5"
+            />
+            <label for="binhLuan">Bình Luận:</label>
+            <textarea id="binhLuan" name="binhLuan"><%= danhgia.BinhLuan || '' %></textarea>
+            <label for="chatLuong">Chất Lượng:</label>
+            <textarea id="chatLuong" name="chatLuong"><%= danhgia.ChatLuong || '' %></textarea>
+            <label for="thaiDo">Thái Độ:</label>
+            <textarea id="thaiDo" name="thaiDo"><%= danhgia.ThaiDo || '' %></textarea>
+            <label for="ngayDG">Ngày Đánh Giá:</label>
+            <input
+              type="datetime-local"
+              id="ngayDG"
+              name="ngayDG"
+              value="<%= new Date(danhgia.NgayDG).toISOString().slice(0,16) %>"
+              required
+            />
+            <button type="submit">Lưu Thay Đổi</button>
+          </form>
+        </div>
+        <a href="/admin/danhgia" class="action-btn">Quay lại</a>
+      </div>
+    </div>
+  </body>
+</html>
