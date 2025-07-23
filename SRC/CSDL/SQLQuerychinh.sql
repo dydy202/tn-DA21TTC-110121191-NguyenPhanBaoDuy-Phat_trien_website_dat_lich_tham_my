@@ -57,7 +57,6 @@ CREATE TABLE LichHen (
     MaSP INT,
     NgayHen DATE,
     GioHen TIME,
-    SoLuongSP INT,
     TrangThaiLH NVARCHAR(50) DEFAULT N'Chờ xác nhận',
     GhiChuLH NVARCHAR(MAX),
     HinhAnhLH NVARCHAR(MAX),
@@ -108,7 +107,6 @@ CREATE TABLE ChiTietHoaDon (
     MaCTHD INT IDENTITY(1,1) PRIMARY KEY,
     MaHD INT,
     MaSP INT,
-    SoLuong INT NOT NULL,
     DonGia DECIMAL(10,2) NOT NULL,
     FOREIGN KEY (MaHD) REFERENCES HoaDon(MaHD),
     FOREIGN KEY (MaSP) REFERENCES SanPham(MaSP)
